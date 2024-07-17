@@ -1,15 +1,38 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import Button from "$lib/components/Button.svelte";
+  import { writable } from "svelte/store";
   import type { PageData } from "./$types";
+  import InputFiles from "./InputFiles.svelte";
 
   export let data: PageData;
+  export const selectedFiles = writable<File[]>([]);
+
+  $: if ($selectedFiles.length > 0) {
+    console.log('Number of files:', $selectedFiles.length);
+    // You can access individual files like this:
+    $selectedFiles.forEach((file, index) => {
+        console.log('File', index, ':', file.name);
+    });
+  }
 
   let title = "";
   let language = "";
   let content = "";
   let tags: string[] = [];
   let tagInput = "";
+
+  async function handleSubmit(event: Event) {
+    event.preventDefault();
+    
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    // Append each selected file to the FormData
+    $selectedFiles.forEach((file) => {
+      formData.append('media', file);
+    });
+  }
 </script>
 
 <svelte:head>
@@ -23,6 +46,10 @@
     action="/new?/newPost"
     use:enhance={({ formData }) => {
       formData.append("tags", JSON.stringify(tags));
+      // Append each selected file to the FormData
+      $selectedFiles.forEach((file) => {
+        formData.append('media', file);
+      });
     }}
   >
     <h1>Create a New Code Snippet</h1>
@@ -38,6 +65,16 @@
         placeholder="Enter a valid title"
         bind:value={title}
       />
+    </div>
+    
+    <div class="input-container">
+      <h2>Media</h2>
+      <InputFiles {selectedFiles} />
+      {#if $selectedFiles}
+        <p>Selected files: {$selectedFiles.length}</p>
+      {:else}
+        <p>No files selected</p>
+      {/if}
     </div>
 
     <div class="input-container">

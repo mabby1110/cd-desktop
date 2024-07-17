@@ -56,6 +56,7 @@
       <img
         src={$pb.getFileUrl(post.user, post.user.photo)}
         alt={post.user.name}
+        class="profileImg"
       />
     {:else}
       <iconify-icon icon="ic:round-account-circle"></iconify-icon>
@@ -98,6 +99,18 @@
       </form>
     {/if}
   </div>
+</section>
+
+<section>
+  {#if $pb && post.media} 
+    {#each post.media as file}
+      <img
+        src={$pb.getFileUrl(post,file)}
+        alt={file.name || 'Post media'}
+        class="mediaImg"
+      />
+    {/each}
+  {/if}
 </section>
 
 <style>
@@ -169,11 +182,17 @@
     color: var(--accent-color);
   }
 
-  img {
+  .profileImg {
     width: 32px;
     height: 32px;
     border-radius: 100px;
     object-fit: cover;
+  }
+
+  .mediaImg {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
   }
 
   .account iconify-icon {

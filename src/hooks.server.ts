@@ -6,6 +6,13 @@ import { pb } from "$lib/pocketbase";
 import { fail } from "@sveltejs/kit";
 import PocketBase from "pocketbase";
 
+try {
+    const pocketbaseUrl = import.meta.env.VITE_POCKETBASE_URL;
+    const POCKETBASE_PRIVATE_EMAIL = import.meta.env.POCKETBASE_PRIVATE_EMAIL;
+    const POCKETBASE_PRIVATE_PASSWORD = import.meta.env.POCKETBASE_PRIVATE_PASSWORD;
+    const apiKey = import.meta.env.VITE_API_KEY;
+} catch{}
+
 export const handle = async ({event, resolve}) => {
     event.locals.pocketBase = new PocketBase("http://127.0.0.1:8090");
 
