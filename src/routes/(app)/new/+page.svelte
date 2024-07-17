@@ -1,15 +1,31 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import Button from "$lib/components/Button.svelte";
+  import { writable } from "svelte/store";
   import type { PageData } from "./$types";
+  import InputFiles from "./InputFiles.svelte";
 
   export let data: PageData;
+  export const selectedFiles = writable<File[]>([]);
+
+  $: if ($selectedFiles.length > 0) {
+    console.log('Number of files:', $selectedFiles.length);
+    // You can access individual files like this:
+    $selectedFiles.forEach((file, index) => {
+        console.log('File', index, ':', file.name);
+    });
+  }
 
   let title = "";
   let language = "";
   let content = "";
   let tags: string[] = [];
   let tagInput = "";
+
+  function handleFilesDropped(event: CustomEvent<{files: File[]}>) {
+    console.log('Files dropped:', event.detail.files);
+    // You can perform additional actions here if needed
+  }
 </script>
 
 <svelte:head>
@@ -38,6 +54,16 @@
         placeholder="Enter a valid title"
         bind:value={title}
       />
+    </div>
+    
+    <div class="input-container">
+      <h2>Media</h2>
+      <InputFiles {selectedFiles}/>
+      {#if $selectedFiles}
+        <p>Selected files: {$selectedFiles.length}</p>
+      {:else}
+        <p>No files selected</p>
+      {/if}
     </div>
 
     <div class="input-container">
