@@ -101,7 +101,7 @@
   </div>
 </section>
 
-<section>
+<section class="media">
   {#if $pb && post.media} 
     {#each post.media as file}
       <img
@@ -114,6 +114,35 @@
 </section>
 
 <style>
+  .media {
+  display: grid;
+  gap: 1rem; /* Adjust the gap between grid items as needed */
+}
+
+@media (min-width: 0px) and (max-width: 599px) {
+  .media {
+    grid-template-columns: 1fr 1fr; /* 2 columns for small screens */
+  }
+}
+
+@media (min-width: 600px) and (max-width: 899px) {
+  .media {
+    grid-template-columns: 1fr 1fr 1fr; /* 3 columns for medium screens */
+  }
+}
+
+@media (min-width: 900px) {
+  .media {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for large screens */
+  }
+}
+
+.mediaImg {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Adjust as needed */
+}
+
   pre {
     tab-size: 4;
     display: flex;
