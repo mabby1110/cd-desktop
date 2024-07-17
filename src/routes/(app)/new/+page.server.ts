@@ -28,9 +28,11 @@ export const actions = {
     const content = formData.get("content");
     const language = formData.get("language");
     const tags = formData.get("tags");
-    const files = formData.get("files");
-
+    const mediaFiles = formData.getAll('media');
+    console.log(mediaFiles); // true
+    
     let postId;
+    const parsedTags = JSON.parse(tags);
 
     try {
       if (typeof title !== "string") {
@@ -61,8 +63,6 @@ export const actions = {
         throw new Error("Invalid tags");
       }
 
-      const parsedTags = JSON.parse(tags);
-
       if (!Array.isArray(parsedTags)) {
         throw new Error("Invalid tags");
       }
@@ -86,26 +86,39 @@ export const actions = {
       }
 
       // media
-      for (const file of files){
-        if (!(photo instanceof File)) {
-          throw new Error("Invalid photo");
-        }
+      // for (const file of mediaFiles){
+      //   if (!(file instanceof File)) {
+      //     throw new Error("Invalid file");
+      //   }
   
-        if (photo.size === 0) {
-          throw new Error("Invalid photo");
-        }
-      }
+      //   if (file.size === 0) {
+      //     throw new Error("Invalid file");
+      //   }
+      // }
 
       // upload
+      console.log(":)", typeof mediaFiles)
       const record = await locals.pocketBaseAdmin.collection("posts").create({
         title,
         content,
         tags: validatedTags,
         language,
         user: authModel.id,
+        media: mediaFiles,
       });
-
       postId = record.id;
+      // for (const file of mediaFiles) {
+      //   console.log(":)", typeof file)
+      //   await locals.pocketBaseAdmin.collection('posts').update(postId, {
+      //     media: file,
+      //   }, {
+      //     // This option is needed if you're updating an existing record
+      //     // and want to add new files instead of replacing existing ones
+      //     fields: '+media',
+      //   });
+      // }
+      
+      console.log("mabby", postId)
     } catch (error) {
       console.log(error);
       if (error instanceof Error) {
@@ -124,46 +137,5 @@ export const actions = {
     }
 
     throw redirect(303, "/");
-  },
-  uploadMedia: async ({ locals, request }) => {
-    if (
-      !locals.pocketBase.authStore.isValid ||
-      !validateUser(locals.pocketBase.authStore.model)
-    ) {
-      throw redirect(303, "/auth");
-    }
-
-    const formData = await request.formData();
-
-    const photo = formData.get("photo");
-
-    try {
-      if (!(photo instanceof File)) {
-        throw new Error("Invalid photo");
-      }
-
-      if (photo.size === 0) {
-        throw new Error("Invalid photo");
-      }
-
-      await locals.pocketBaseAdmin
-        .collection("users")
-        .update(locals.pocketBase.authStore.model.id, { photo });
-    } catch (error) {
-      console.log(error);
-      if (error instanceof Error) {
-        return {
-          error: "change-profile-photo",
-          message: error.message,
-        };
-      }
-
-      return {
-        error: "change-profile-photo",
-        message: "An error occurred while changing profile photo.",
-      };
-    }
-
-    throw redirect(303, "/settings");
   }
 };

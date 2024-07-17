@@ -22,9 +22,16 @@
   let tags: string[] = [];
   let tagInput = "";
 
-  function handleFilesDropped(event: CustomEvent<{files: File[]}>) {
-    console.log('Files dropped:', event.detail.files);
-    // You can perform additional actions here if needed
+  async function handleSubmit(event: Event) {
+    event.preventDefault();
+    
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    // Append each selected file to the FormData
+    $selectedFiles.forEach((file) => {
+      formData.append('media', file);
+    });
   }
 </script>
 
@@ -39,6 +46,10 @@
     action="/new?/newPost"
     use:enhance={({ formData }) => {
       formData.append("tags", JSON.stringify(tags));
+      // Append each selected file to the FormData
+      $selectedFiles.forEach((file) => {
+        formData.append('media', file);
+      });
     }}
   >
     <h1>Create a New Code Snippet</h1>
@@ -58,7 +69,7 @@
     
     <div class="input-container">
       <h2>Media</h2>
-      <InputFiles {selectedFiles}/>
+      <InputFiles {selectedFiles} />
       {#if $selectedFiles}
         <p>Selected files: {$selectedFiles.length}</p>
       {:else}
