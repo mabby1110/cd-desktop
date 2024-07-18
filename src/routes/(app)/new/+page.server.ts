@@ -26,7 +26,6 @@ export const actions = {
 
     const title = formData.get("title");
     const content = formData.get("content");
-    const language = formData.get("language");
     const tags = formData.get("tags");
     const mediaFiles = formData.getAll('media');
     console.log(mediaFiles); // true
@@ -49,14 +48,6 @@ export const actions = {
 
       if (content.length === 0) {
         throw new Error("Content cannot be empty");
-      }
-
-      if (typeof language !== "string") {
-        throw new Error("Invalid language");
-      }
-
-      if (language.length === 0) {
-        throw new Error("Language cannot be empty");
       }
 
       if (typeof tags !== "string") {
@@ -90,7 +81,6 @@ export const actions = {
         title,
         content,
         tags: validatedTags,
-        language,
         user: authModel.id,
         media: mediaFiles,
       });

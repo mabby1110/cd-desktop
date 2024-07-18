@@ -21,14 +21,13 @@ export type User = {
     tags: string[];
     likes: string[];
     user: User;
-    language: string;
+    price: Number;
   };
   
   export function validatePost(data: any): data is Post {
     const titleIsString = typeof data.title === "string";
     const createdIsString = typeof data.created === "string";
     const contentIsString = typeof data.content === "string";
-    const languageIsString = typeof data.language === "string";
     const userIsValid = validateUser(data.user);
     const tags = data.tags;
     const tagsIsValid =
@@ -50,7 +49,6 @@ export type User = {
       titleIsString &&
       createdIsString &&
       contentIsString &&
-      languageIsString &&
       userIsValid &&
       tagsIsValid &&
       likesIsValid

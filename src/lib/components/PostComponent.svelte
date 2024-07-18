@@ -82,7 +82,7 @@
 </section>
 
 <header>
-  <h1>{post.title}</h1>
+  <b>${post.price}</b><h1>{post.title}</h1>
 </header>
 
 <pre>
