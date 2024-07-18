@@ -115,9 +115,18 @@
 </section>
 
 <section class="comments">
-  {#if $pb && post} 
+  {#if $pb && post.expand.comments} 
     {#each post.expand.comments as comment}
       <p>
+        {#if comment.expand.user.photo}
+          <img
+            src={$pb.getFileUrl(comment.expand.user, comment.expand.user.photo)}
+            alt={"profile picturo of "+comment.expand.user.username}
+            class="profileImg"
+          />
+        {:else}
+          <iconify-icon icon="ic:round-account-circle"></iconify-icon>
+        {/if}
         {comment.expand.user.username}: 
         {comment.content}
       </p>
@@ -129,7 +138,7 @@
     method="post"
     action="/?/newComment"
     use:enhance={({ formData }) => {
-      formData.append('user', post.user.id);
+      formData.append('user', authModel.id);
       formData.append('post', post.id);
       formData.append('content', content);
     }}
