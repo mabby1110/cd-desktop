@@ -19,7 +19,7 @@ export const load = (async ({ params }) => {
   try {
     async function getPosts(pbInstance: PocketBase) {
       const posts = await pbInstance.collection("posts").getList(1, 15, {
-        expand: "user",
+        expand: "user, comments, comments.user",
         sort: "-created",
       });
 

@@ -1,3 +1,4 @@
+
 export type User = {
     id: string;
     email?: string;
@@ -53,5 +54,23 @@ export type User = {
       userIsValid &&
       tagsIsValid &&
       likesIsValid
+    );
+  }
+
+  export type Comment = {
+    user: string;
+    post: string;
+    content: string;
+  };
+
+  export function validateComment(data: any): data is Comment {
+    const userIsString = typeof data.user === "string";
+    const postIsString = typeof data.post === "string";
+    const contentIsString = typeof data.content === "string";
+  
+    return (
+      userIsString &&
+      postIsString &&
+      contentIsString
     );
   }

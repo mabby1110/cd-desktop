@@ -18,7 +18,7 @@
       {:then posts}
         {#each posts as post}
           <article>
-            <PostComponent authModel={data.authModel} {post} />
+            <PostComponent authModel={data.authModel} {post}/>
           </article>
         {:else}
           <article><h1>No posts found</h1></article>

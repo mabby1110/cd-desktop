@@ -21,18 +21,6 @@
   let content = "";
   let tags: string[] = [];
   let tagInput = "";
-
-  async function handleSubmit(event: Event) {
-    event.preventDefault();
-    
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-
-    // Append each selected file to the FormData
-    $selectedFiles.forEach((file) => {
-      formData.append('media', file);
-    });
-  }
 </script>
 
 <svelte:head>

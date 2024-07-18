@@ -13,7 +13,8 @@
   export let authModel: User | undefined;
 
   let contentRef: HTMLElement | undefined;
-
+  let content = "";
+  
   onMount(() => {
     if (!contentRef || !post) {
       return;
@@ -111,6 +112,37 @@
       />
     {/each}
   {/if}
+</section>
+
+<section class="comments">
+  {#if $pb && post} 
+    {#each post.expand.comments as comment}
+      <p>
+        {comment.expand.user.username}: 
+        {comment.content}
+      </p>
+    {/each}
+  {/if}
+  <div>show more</div>
+  <form
+    class="commentForm"
+    method="post"
+    action="/?/newComment"
+    use:enhance={({ formData }) => {
+      formData.append('user', post.user.id);
+      formData.append('post', post.id);
+      formData.append('content', content);
+    }}
+  >
+    <textarea bind:value={content} placeholder="Write your comment..."></textarea>
+
+    <Button
+      variant="primary"
+      disabled={content === ""}
+    >
+    >
+    </Button>
+  </form>
 </section>
 
 <style>
