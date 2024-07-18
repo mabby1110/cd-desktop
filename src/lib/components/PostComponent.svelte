@@ -24,33 +24,6 @@
   });
 </script>
 
-<header>
-  <h1>{post.title}</h1>
-
-  {#if authModel && post.user.id === authModel.id}
-    <form action="/posts/{post.id}?/deletePost" method="post">
-      <Button size="icon" variant="destructive">
-        <iconify-icon icon="ph:trash"></iconify-icon>
-      </Button>
-    </form>
-  {/if}
-</header>
-
-<pre>
-  <div class="language">{post.language}</div>
-  <code bind:this={contentRef}>{post.content}</code>
-</pre>
-
-<section class="tags">
-  {#each post.tags as tag}
-    <div class="tag">
-      <span>
-        {tag}
-      </span>
-    </div>
-  {/each}
-</section>
-
 <section class="actions">
   <a href="/profiles/{post.user.id}" class="account">
     {#if $pb && post.user.photo}
@@ -62,7 +35,6 @@
     {:else}
       <iconify-icon icon="ic:round-account-circle"></iconify-icon>
     {/if}
-
     <p>{post.user.name}</p>
   </a>
 
@@ -99,7 +71,32 @@
         </Button>
       </form>
     {/if}
+    {#if authModel && post.user.id === authModel.id}
+      <form action="/posts/{post.id}?/deletePost" method="post">
+        <Button size="icon" variant="destructive">
+          <iconify-icon icon="ph:trash"></iconify-icon>
+        </Button>
+      </form>
+    {/if}
   </div>
+</section>
+
+<header>
+  <h1>{post.title}</h1>
+</header>
+
+<pre>
+  <p bind:this={contentRef}>{post.content}</p>
+</pre>
+
+<section class="tags">
+  {#each post.tags as tag}
+    <div class="tag">
+      <span>
+        {tag}
+      </span>
+    </div>
+  {/each}
 </section>
 
 <section class="media">
@@ -115,26 +112,35 @@
 </section>
 
 <section class="comments">
-  {#if $pb && post.expand.comments} 
-    {#each post.expand.comments as comment}
-      <p>
-        {#if comment.expand.user.photo}
-          <img
-            src={$pb.getFileUrl(comment.expand.user, comment.expand.user.photo)}
-            alt={"profile picturo of "+comment.expand.user.username}
-            class="profileImg"
-          />
-        {:else}
-          <iconify-icon icon="ic:round-account-circle"></iconify-icon>
-        {/if}
-        {comment.expand.user.username}: 
-        {comment.content}
-      </p>
-    {/each}
+  {#if $pb && post.expand.comments}
+    <div class="comments-section">
+      <h3 class="comments-title">Comments</h3>
+      {#each post.expand.comments as comment}
+        <div class="comment">
+          <div class="comment-avatar">
+            {#if comment.expand.user.photo}
+              <img
+                src={$pb.getFileUrl(comment.expand.user, comment.expand.user.photo)}
+                alt={"Profile picture of " + comment.expand.user.username}
+                class="avatar-img"
+              />
+            {:else}
+              <div class="avatar-placeholder">
+                <iconify-icon icon="ic:round-account-circle"></iconify-icon>
+              </div>
+            {/if}
+          </div>
+          <div class="comment-content">
+            <p class="comment-author">{comment.expand.user.username}</p>
+            <p class="comment-text">{comment.content}</p>
+          </div>
+        </div>
+      {/each}
+      <div class="show-more">Show more</div>
+    </div>
   {/if}
-  <div>show more</div>
   <form
-    class="commentForm"
+    class="comment-form"
     method="post"
     action="/?/newComment"
     use:enhance={({ formData }) => {
@@ -143,13 +149,13 @@
       formData.append('content', content);
     }}
   >
-    <textarea bind:value={content} placeholder="Write your comment..."></textarea>
-
+    <textarea bind:value={content} placeholder="Add a comment..." class="comment-input"></textarea>
     <Button
       variant="primary"
       disabled={content === ""}
+      class="comment-submit"
     >
-    >
+      Comment
     </Button>
   </form>
 </section>
@@ -190,6 +196,11 @@
     flex-direction: column;
     position: relative;
     max-height: 60vh;
+  }
+
+  pre p {
+    padding: 0.6rem;
+    text-wrap: wrap;
   }
 
   code {
@@ -285,5 +296,84 @@
   .tag::before {
     content: "#";
     color: var(--accent-color);
+  }
+
+  /* comment section */
+  .comments-section {
+    margin-top: 20px;
+    font-family: 'Roboto', Arial, sans-serif;
+  }
+
+  .comments-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+
+  .comment {
+    display: flex;
+    margin-bottom: 16px;
+  }
+
+  .comment-avatar {
+    margin-right: 16px;
+  }
+
+  .avatar-img, .avatar-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .avatar-placeholder {
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #757575;
+  }
+
+  .comment-content {
+    flex-grow: 1;
+  }
+
+  .comment-author {
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0 0 4px 0;
+  }
+
+  .comment-text {
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .show-more {
+    color: #065fd4;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 16px;
+  }
+
+  .comment-form {
+    margin-top: 24px;
+  }
+
+  .comment-input {
+    width: 100%;
+    min-height: 24px;
+    padding: 8px;
+    color: black;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+
+  .comment-submit {
+    margin-top: 8px;
+    float: right;
   }
 </style>
