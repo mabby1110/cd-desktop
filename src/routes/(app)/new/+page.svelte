@@ -3,7 +3,7 @@
   import Button from "$lib/components/Button.svelte";
   import { writable } from "svelte/store";
   import type { PageData } from "./$types";
-  import InputFiles from "./InputFiles.svelte";
+  import InputFiles from "$lib/components/InputFiles.svelte";
 
   export let data: PageData;
   export const selectedFiles = writable<File[]>([]);
