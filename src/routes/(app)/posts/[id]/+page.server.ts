@@ -3,10 +3,6 @@ import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import type { RecordModel } from "pocketbase";
 
-export const load = (async () => {
-  return {};
-}) satisfies PageServerLoad;
-
 export const actions = {
   toggleLiked: async ({ locals, params, url }) => {
     const authModel = locals.pocketBase.authStore.model;

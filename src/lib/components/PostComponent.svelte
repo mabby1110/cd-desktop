@@ -82,7 +82,8 @@
 </section>
 
 <header>
-  <b>${post.price}</b><h1>{post.title}</h1>
+  <a href="/posts/{post.id}" class="account"><h1>{post.title}</h1></a>
+  <b>${post.price}</b>
 </header>
 
 <pre>
