@@ -1,6 +1,4 @@
 import { writable, get } from "svelte/store";
-import type { CartItem } from "./app";
-import { updated } from "$app/stores";
 
 export const cartItems = writable<CartItem[]>([]);
 
@@ -14,10 +12,11 @@ export const addToCart = (id: string) => {
         cartItems.update(() => {
             let updatedItems = items.map((item) => {
                 if(item.id === id) {
-                    return {...items, quantity: item.quantity + 1}
+                    return {...item, quantity: item.quantity + 1}
                 }
                 return item
             })
+
             return updatedItems
         })
     } else {
@@ -35,12 +34,13 @@ export const removeFromCart = (id: string) => {
 
     if(items[i]?.quantity - 1 == 0) {
         items.splice(i)
+        console.log("zzz")
     }
 
     cartItems.update(() => {
         let updatedItems = items.map((item) => {
             if(item.id === id) {
-                return {...items, quantity: item.quantity - 1}
+                return {...item, quantity: item.quantity - 1}
             }
             return item
         })

@@ -15,8 +15,9 @@ declare global {
 	}
 }
 
-export class CartItem {
+declare class CartItem {
 	id: string
 	quantity: number
 }
+
 export {};

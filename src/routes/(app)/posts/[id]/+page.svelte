@@ -21,11 +21,12 @@
         }
       } else {
         if (currentImageIndex === 0) {
-          currentImageIndex = data?.post?.media.lenght - 1;
+          currentImageIndex = data?.post?.media.length - 1;
         } else {
           currentImageIndex = currentImageIndex - 1;
         }
       }
+      console.log(currentImageIndex)
     }
   </script>
   
@@ -38,7 +39,6 @@
   {#if data.post}
   <div class="flex flex-col md:flex-row">
     <div class="md:h-90 md:w-2/3">
-      
       {#key highlightedImageSrc}
       <div class="relative h-4/5 bg-light">
         <GridTile

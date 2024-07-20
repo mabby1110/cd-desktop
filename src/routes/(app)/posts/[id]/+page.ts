@@ -2,7 +2,6 @@ import { pb } from "$lib/pocketbase";
 import { get } from "svelte/store";
 import type { PageLoad } from "./$types";
 import { validatePost } from "$lib/types";
-import type { RecordModel } from "pocketbase";
 
 export const load = (async ({ params }) => {
   let pbInstance = get(pb);

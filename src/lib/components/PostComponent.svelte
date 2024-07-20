@@ -1,20 +1,34 @@
 <script lang="ts">
-  import type { Post, User } from "$lib/types";
-  import type { RecordModel } from "pocketbase";
   import Button from "./Button.svelte";
+  import Highlight from "highlight.js";
   import { pb } from "$lib/pocketbase";
   import { enhance } from "$app/forms";
   import { fade } from "svelte/transition";
-  import Highlight from "highlight.js";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
+  import { get } from "svelte/store";
+
+  import type { Post, User } from "$lib/types";
+  import type { RecordModel } from "pocketbase";
+  import { cartItems, addToCart, removeFromCart } from "../../shoppingCart";
 
   export let post: Post & RecordModel;
   export let authModel: User | undefined;
 
   let contentRef: HTMLElement | undefined;
   let content = "";
+
+  let cart = get(cartItems)
+  let cartItemIndex = cart.findIndex((item) => { return item.id === post.id })
+  let cartProduct = cart[cartItemIndex]
   
+  cartItems.subscribe((newCartValue) => {
+    cart = newCartValue
+    cartItemIndex = cart.findIndex((item) => { return item.id === post.id })
+    cartProduct = cart[cartItemIndex]
+
+  })
+
   onMount(() => {
     if (!contentRef || !post) {
       return;
@@ -82,8 +96,29 @@
 </section>
 
 <header>
-  <a href="/posts/{post.id}" class="account"><h1>{post.title}</h1></a>
-  <b>${post.price}</b>
+  <a href="/posts/{post.id}" class="account"><h1>{post.title}{post.id}</h1></a>
+  <div class="flex">
+    <b>${post.price}</b>
+    {#if post.id}
+      <button 
+        on:click={()=>removeFromCart(post.id)}
+        class="flex items-center"
+      >
+        <iconify-icon icon="material-symbols:remove" width="1rem" height="1rem"></iconify-icon>
+      </button>
+
+      {#if cartProduct}
+        <p>{cartProduct.quantity}</p>
+      {/if}
+
+      <button 
+        on:click={()=>addToCart(post.id)}
+        class="flex items-center"
+      >
+        <iconify-icon icon="material-symbols:add" width="1rem" height="1rem"></iconify-icon>
+      </button>
+    {/if}
+  </div>
 </header>
 
 <pre>
@@ -154,7 +189,6 @@
     <Button
       variant="primary"
       disabled={content === ""}
-      class="comment-submit"
     >
       Comment
     </Button>

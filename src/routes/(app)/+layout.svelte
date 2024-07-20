@@ -2,6 +2,7 @@
   import type { PageData } from "./$types";
   import Link from "$lib/components/Link.svelte";
   import { pb } from "$lib/pocketbase";
+  import ShoppingCart from "$lib/components/ShoppingCart.svelte";
 
   export let data: PageData;
 </script>
@@ -101,6 +102,9 @@
   </aside>
 
   <main>
+    <div class="shoppingCart">
+      <ShoppingCart/>
+    </div>
     <slot />
   </main>
 </div>
@@ -111,6 +115,12 @@
     background-color: var(--secondary-color);
     flex-grow: 1;
     overflow: hidden;
+  }
+
+  .shoppingCart {
+    position: absolute;
+    right: 0;
+    z-index: 1;
   }
 
   aside {
