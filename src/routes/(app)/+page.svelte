@@ -17,7 +17,7 @@
         <article><h1>Loading posts</h1></article>
       {:then posts}
         {#each posts as post}
-          <article>
+          <article class="postComponent">
             <PostComponent authModel={data.authModel} {post}/>
           </article>
         {:else}

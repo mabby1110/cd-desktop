@@ -14,13 +14,18 @@
 
   export let post: Post & RecordModel;
   export let authModel: User | undefined;
-
   let contentRef: HTMLElement | undefined;
+
+  // logica comentarios
   let content = "";
 
+  // logica del carrito
   let cart = get(cartItems)
   let cartItemIndex = cart.findIndex((item) => { return item.id === post.id })
   let cartProduct = cart[cartItemIndex]
+
+  // logica expandir post
+  let expandPost = false
   
   cartItems.subscribe((newCartValue) => {
     cart = newCartValue
@@ -99,7 +104,7 @@
   <a href="/posts/{post.id}" class="account"><h1>{post.title}{post.id}</h1></a>
   <div class="flex">
     <b>${post.price}</b>
-    {#if post.id}
+    {#if post.id && expandPost}
       <button 
         on:click={()=>removeFromCart(post.id)}
         class="flex items-center"
@@ -122,7 +127,9 @@
 </header>
 
 <pre>
-  <p bind:this={contentRef}>{post.content}</p>
+  {#if expandPost}
+    <p bind:this={contentRef}>{post.content}</p>
+  {/if}
 </pre>
 
 <section class="tags">
@@ -148,7 +155,7 @@
 </section>
 
 <section class="comments">
-  {#if $pb && post.expand.comments}
+  {#if $pb && post.expand.comments && expandPost}
     <div class="comments-section">
       <h3 class="comments-title">Comments</h3>
       {#each post.expand.comments as comment}
@@ -174,26 +181,33 @@
       {/each}
       <div class="show-more">Show more</div>
     </div>
-  {/if}
-  <form
-    class="comment-form"
-    method="post"
-    action="/?/newComment"
-    use:enhance={({ formData }) => {
-      formData.append('user', authModel.id);
-      formData.append('post', post.id);
-      formData.append('content', content);
-    }}
-  >
-    <textarea bind:value={content} placeholder="Add a comment..." class="comment-input"></textarea>
-    <Button
-      variant="primary"
-      disabled={content === ""}
+
+    <form
+      class="comment-form"
+      method="post"
+      action="/?/newComment"
+      use:enhance={({ formData }) => {
+        formData.append('user', authModel.id);
+        formData.append('post', post.id);
+        formData.append('content', content);
+      }}
     >
-      Comment
-    </Button>
-  </form>
+      <textarea bind:value={content} placeholder="Add a comment..." class="comment-input"></textarea>
+      <Button
+        variant="primary"
+        disabled={content === ""}
+      >
+        Comment
+      </Button>
+    </form>
+  {/if}
 </section>
+
+{#if expandPost}
+  <button on:click={()=>{expandPost=false}}>...</button>
+{:else}
+  <button on:click={()=>{expandPost=true}}>...</button>
+{/if}
 
 <style>
   .media {
