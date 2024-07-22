@@ -1,6 +1,7 @@
 import {
     POCKETBASE_PRIVATE_EMAIL,
     POCKETBASE_PRIVATE_PASSWORD,
+    POCKETBASE_URI,
 } from "$env/static/private";
 import { pb } from "$lib/pocketbase";
 import { fail } from "@sveltejs/kit";
@@ -14,7 +15,7 @@ try {
 } catch{}
 
 export const handle = async ({event, resolve}) => {
-    event.locals.pocketBase = new PocketBase("http://127.0.0.1:8090");
+    event.locals.pocketBase = new PocketBase(POCKETBASE_URI);
 
     try {
         event.locals.pocketBase.authStore.loadFromCookie(
@@ -26,7 +27,7 @@ export const handle = async ({event, resolve}) => {
         event.locals.pocketBase.authStore.clear();
     }
 
-    event.locals.pocketBaseAdmin = new PocketBase("http://127.0.0.1:8090");
+    event.locals.pocketBaseAdmin = new PocketBase(POCKETBASE_URI);
 
     try {
         await event.locals.pocketBaseAdmin.admins.authWithPassword(
