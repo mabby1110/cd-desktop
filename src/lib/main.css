@@ -36,6 +36,17 @@ body {
   background-color: var(--secondary-color);
 }
 
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+}
+.cunt {
+  display: grid;
+  height: 94vh;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+}
+
 .hljs {
   background: #282c34;
   color: #abb2bf;

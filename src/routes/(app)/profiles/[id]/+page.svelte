@@ -13,7 +13,7 @@
     <title>{result.user ? result.user.name : "User not found"} - CS</title>
   </svelte:head>
   
-  <div class="container">
+  <div class="userInfo">
     <header>
       {#if result.user}
         <div class="first-row">
@@ -40,7 +40,9 @@
         <h1 class="not-found">{"User not found"}</h1>
       {/if}
     </header>
-  
+  </div>
+
+  <div class="posts">
     {#if result.posts}
       {#await result.posts}
         <article>
@@ -59,16 +61,41 @@
   </div>
   
   <style>
-    .container {
+    .posts {
+      grid-area: 3 / 1 / 12 / 12;
+      view-transition-name: mainContentTrans;
+      overflow: scroll;
+
+      padding: 1rem;
+      display: flex;
+      align-items: start;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      border-width: 0 0.1vh 0.1vh 0;
+      border-color: var(--text-color);
+    }
+
+    .userInfo {
+      grid-area: 1 / 1 / 3 / 12;
+      view-transition-name: userTrans;
+
+      border-width: 0 0.1vh 0.1vh 0;
+      border-color: var(--text-color);
+    }
+
+    article{
+      background-color: var(--primary-color);
+      border-radius: 8px;
+      border: solid 1px var(--tertiary-color);
+      max-width: 40rem;
+      flex-grow: 1;
+      width: 60vw;
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
     }
-  
-    article,
+
     header {
       background-color: var(--primary-color);
       border-radius: 8px;

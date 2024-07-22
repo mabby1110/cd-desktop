@@ -17,16 +17,18 @@
   <svelte:head>
     <title>Settings - CS</title>
   </svelte:head>
-  
-  <article>
+
+  <div class="accountSettings">
     <AccountSettings />
-  
-    <div class="right">
-      <Profile />
-  
-      <Security />
-    </div>
-  </article>
+  </div>
+
+  <div class="profile">
+    <Profile />
+  </div>
+
+  <div class="security">
+    <Security />
+  </div>
   
   <style>
     article {
@@ -36,7 +38,15 @@
       padding: 1rem;
     }
   
-    .right {
+    .accountSettings {
+      grid-area: 1 / 1 / 10 / 9;
+    }
+    .security {
+      grid-area: 4 / 9 / 5 / -1;
+    }
+
+    .profile {
+      grid-area: 1 / 9 / 4 / -1;
       display: flex;
       flex-direction: column;
       gap: 1rem;

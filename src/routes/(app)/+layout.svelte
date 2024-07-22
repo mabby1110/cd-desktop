@@ -3,6 +3,7 @@
   import Link from "$lib/components/Link.svelte";
   import { pb } from "$lib/pocketbase";
   import ShoppingCart from "$lib/components/ShoppingCart.svelte";
+  import ViewTransition from "$lib/components/Navigation.svelte"
 
   export let data: PageData;
 </script>
@@ -16,6 +17,7 @@
   
   
 <main>
+  <ViewTransition />
   <div class="navbar">
     <a href="/">
       <h1 class="md-show">Demo co</h1>
@@ -54,23 +56,24 @@
       {/if}
     </section>
   </div>
-  <slot />
-
-  <div class="userActions">
-    <div class="newPost">
-      {#if data.authenticated}
-        <Link href="/new" variant="primary" size="large">
-          <iconify-icon icon="mingcute:add-fill"></iconify-icon>
-          <span> Create </span>
-        </Link>
-      {:else}
-        <Link href="/auth" variant="primary" size="large">
-          Create an account
-        </Link>
-      {/if}
-    </div>
-    <div class="shoppingCart">
-      <ShoppingCart/>
+  <div class="cunt">
+    <slot />
+    <div class="userActions">
+      <div class="newPost">
+        {#if data.authenticated}
+          <Link href="/new" variant="primary" size="large">
+            <iconify-icon icon="mingcute:add-fill"></iconify-icon>
+            <span> Create </span>
+          </Link>
+        {:else}
+          <Link href="/auth" variant="primary" size="large">
+            Create an account
+          </Link>
+        {/if}
+      </div>
+      <div class="shoppingCart">
+        <ShoppingCart/>
+      </div>
     </div>
   </div>
 </main>
@@ -87,14 +90,12 @@
   }
 
   .userActions {
-    position: absolute;
-    right: 0;
+    grid-area: 12 / 1 / 13 / 5;
     z-index: 1;
-  }
 
-  hr {
-    border: none;
-    border-top: solid 1px var(--tertiary-color);
+    padding-left: 2rem;
+    display: flex;
+    align-items: center;
   }
 
   .navbar > a {
