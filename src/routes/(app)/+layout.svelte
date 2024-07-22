@@ -9,77 +9,79 @@
 
 <!-- <svelte:head>
   <link
-    rel="stylesheet"
-    href="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/default.min.css"
+  rel="stylesheet"
+  href="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/default.min.css"
   />
-</svelte:head> -->
+  </svelte:head> -->
+  
+  
+<main>
+  <div class="navbar">
+    <a href="/">
+      <h1 class="md-show">Demo co</h1>
+      <h1 class="md-hide">CS</h1>
+    </a>
 
-<div class="main">
-  <aside>
-    <div class="top">
-      <a href="/">
-        <h1 class="md-show">Demo co</h1>
-        <h1 class="md-hide">CS</h1>
-      </a>
-
-      <hr />
-
-      <section class="links">
-        <Link href="/" variant="ghost" align="left">
-          <div class="link-content">
-            <iconify-icon icon="octicon:home-fill-24"></iconify-icon>
-            <span> Home </span>
-          </div>
-        </Link>
-
-        {#if data.authenticated}
-          <Link href="/profiles" variant="ghost" align="left">
-            <div class="link-content">
-              {#if $pb && data.authModel && data.authModel.photo}
-                <img
-                  src={$pb.getFileUrl(data.authModel, data.authModel.photo)}
-                  alt={data.authModel.name}
-                />
-              {:else}
-                <iconify-icon icon="ic:baseline-account-circle"></iconify-icon>
-              {/if}
-              <span> Profile </span>
-            </div>
-          </Link>
-
-          <Link href="/settings" variant="ghost">
-            <div class="link-content">
-              <iconify-icon icon="material-symbols:settings"></iconify-icon>
-              <span> Settings </span>
-            </div>
-          </Link>
-        {/if}
-      </section>
-
-      <section class="links icons">
-        <Link href="/" variant="ghost" size="icon">
+    <section class="links">
+      <Link href="/" variant="ghost" align="left">
+        <div class="link-content">
           <iconify-icon icon="octicon:home-fill-24"></iconify-icon>
+          <span> Home </span>
+        </div>
+      </Link>
+
+      {#if data.authenticated}
+      <Link href="/profiles" variant="ghost" align="left">
+        <div class="link-content">
+          {#if $pb && data.authModel && data.authModel.photo}
+            <img
+              src={$pb.getFileUrl(data.authModel, data.authModel.photo)}
+              alt={data.authModel.name}
+            />
+          {:else}
+            <iconify-icon icon="ic:baseline-account-circle"></iconify-icon>
+          {/if}
+          <span> Profile </span>
+        </div>
+      </Link>
+
+      <Link href="/settings" variant="ghost">
+        <div class="link-content">
+          <iconify-icon icon="material-symbols:settings"></iconify-icon>
+          <span> Settings </span>
+        </div>
+      </Link>
+      {/if}
+    </section>
+
+    <section class="links icons">
+      <Link href="/" variant="ghost" size="icon">
+        <iconify-icon icon="octicon:home-fill-24"></iconify-icon>
+      </Link>
+
+      {#if data.authenticated}
+        <Link href="/profiles" variant="ghost" size="icon">
+          <iconify-icon icon="ic:baseline-account-circle"></iconify-icon>
         </Link>
 
-        {#if data.authenticated}
-          <Link href="/profiles" variant="ghost" size="icon">
-            <iconify-icon icon="ic:baseline-account-circle"></iconify-icon>
-          </Link>
+        <Link href="/settings" variant="ghost" size="icon">
+          <iconify-icon icon="material-symbols:settings"></iconify-icon>
+        </Link>
+      {:else}
+        <Link href="/settings" size="icon" variant="primary">
+          <iconify-icon icon="mdi:login"></iconify-icon>
+        </Link>
+      {/if}
+    </section>
+  </div>
+  <slot />
 
-          <Link href="/settings" variant="ghost" size="icon">
-            <iconify-icon icon="material-symbols:settings"></iconify-icon>
-          </Link>
-        {/if}
-      </section>
-    </div>
-
-    <div class="links">
+  <div class="userActions">
+    <div class="newPost">
       {#if data.authenticated}
         <Link href="/new" variant="primary" size="large">
-          <div class="link-content create">
-            <iconify-icon icon="mingcute:add-fill"></iconify-icon>
-            <span> Create </span>
-          </div>
+          <iconify-icon icon="mingcute:add-fill"></iconify-icon>
+          <span> Create </span>
         </Link>
       {:else}
         <Link href="/auth" variant="primary" size="large">
@@ -87,52 +89,28 @@
         </Link>
       {/if}
     </div>
-
-    <div class="links icons">
-      {#if data.authenticated}
-        <Link href="/new" variant="primary" size="icon">
-          <iconify-icon icon="mingcute:add-fill"></iconify-icon>
-        </Link>
-      {:else}
-        <Link href="/settings" size="icon" variant="primary">
-          <iconify-icon icon="mdi:login"></iconify-icon>
-        </Link>
-      {/if}
-    </div>
-  </aside>
-
-  <main>
     <div class="shoppingCart">
       <ShoppingCart/>
     </div>
-    <slot />
-  </main>
-</div>
+  </div>
+</main>
 
 <style>
-  .main {
+  main {
     display: flex;
+    max-height: 95%;
+    align-items: stretch;
+    flex-direction: column;
     background-color: var(--secondary-color);
-    flex-grow: 1;
-    overflow: hidden;
+    
+    overflow: scroll;
+    height: 100vh;
   }
 
-  .shoppingCart {
+  .userActions {
     position: absolute;
     right: 0;
     z-index: 1;
-  }
-
-  aside {
-    background-color: var(--primary-color);
-    border-right: solid 1px var(--tertiary-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-    padding: 1rem;
-    overflow: scroll;
   }
 
   hr {
@@ -140,27 +118,21 @@
     border-top: solid 1px var(--tertiary-color);
   }
 
-  .top > a {
+  .navbar > a {
     text-decoration: none;
     display: grid;
     place-items: center;
   }
 
-  .top {
+  .navbar {
+    position: sticky;
     display: flex;
-    flex-direction: column;
+    max-height: 5%;
+    justify-content: space-between;
     gap: 1rem;
-  }
+    border-top: white;
+    border-width: 0 0 0.1vw 0;
 
-  aside h1 {
-    color: var(--accent-color);
-    font-size: 24px;
-  }
-
-  main {
-    overflow: scroll;
-    height: 100vh;
-    flex-grow: 1;
   }
 
   .md-show {
@@ -173,7 +145,7 @@
 
   .links {
     display: none;
-    flex-direction: column;
+    flex-direction: row;
     gap: 8px;
   }
 
@@ -215,10 +187,6 @@
   }
 
   @media (min-width: 800px) {
-    aside {
-      min-width: 10rem;
-      align-items: unset;
-    }
 
     .md-show {
       display: block;

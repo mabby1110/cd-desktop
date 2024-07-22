@@ -41,6 +41,7 @@
 <style>
     .sidebar {
         position: fixed;
+        display: nonecx ;
         top: 0;
         right: 0;
         height: 100%;
