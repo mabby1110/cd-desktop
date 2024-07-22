@@ -53,26 +53,6 @@
       </Link>
       {/if}
     </section>
-
-    <section class="links icons">
-      <Link href="/" variant="ghost" size="icon">
-        <iconify-icon icon="octicon:home-fill-24"></iconify-icon>
-      </Link>
-
-      {#if data.authenticated}
-        <Link href="/profiles" variant="ghost" size="icon">
-          <iconify-icon icon="ic:baseline-account-circle"></iconify-icon>
-        </Link>
-
-        <Link href="/settings" variant="ghost" size="icon">
-          <iconify-icon icon="material-symbols:settings"></iconify-icon>
-        </Link>
-      {:else}
-        <Link href="/settings" size="icon" variant="primary">
-          <iconify-icon icon="mdi:login"></iconify-icon>
-        </Link>
-      {/if}
-    </section>
   </div>
   <slot />
 
@@ -98,7 +78,6 @@
 <style>
   main {
     display: flex;
-    max-height: 95%;
     align-items: stretch;
     flex-direction: column;
     background-color: var(--secondary-color);
@@ -127,7 +106,6 @@
   .navbar {
     position: sticky;
     display: flex;
-    max-height: 5%;
     justify-content: space-between;
     gap: 1rem;
     border-top: white;

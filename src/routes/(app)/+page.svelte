@@ -39,6 +39,7 @@
   <style>
     .cunt {
       display: grid;
+      height: 94vh;
       grid-template-columns: repeat(12, 1fr);
       grid-template-rows: repeat(12, 1fr);
     }
@@ -50,7 +51,6 @@
 
       padding: 1rem;
       display: flex;
-      flex-direction: column;
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
