@@ -67,7 +67,7 @@
     }
 
     .map {
-      grid-area: 5 / 1 / last-line / 10;
+      grid-area: 5 / 1 / 11 / 5;
 
       margin: 0 0 0 2rem;
       border-width: 0 0 0.1vh;
