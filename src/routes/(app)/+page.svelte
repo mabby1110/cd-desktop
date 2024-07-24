@@ -69,11 +69,11 @@
 
     .metadata {
       grid-area: 1 / 1 / 5 / 5;
-      view-transition-name: metadata;
 
       border-width: 0.1vh;
       border-color: var(--text-color);
     }
+    
     .globalActions {
         grid-area: 5 / 1 / 13 / 5;
         view-transition-name: globalActions;

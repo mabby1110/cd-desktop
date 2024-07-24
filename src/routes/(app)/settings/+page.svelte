@@ -8,6 +8,7 @@
     import Profile from "./Profile.svelte";
     import Security from "./Security.svelte";
     import { setContext } from "svelte";
+    import Actions from "$lib/components/Actions.svelte";
   
     export let data: PageData;
   
@@ -18,35 +19,57 @@
     <title>Settings - CS</title>
   </svelte:head>
 
-  <div class="accountSettings">
+  <div class="mainContent" style:--mainContent="mainContent">
     <AccountSettings />
   </div>
 
-  <div class="profile">
-    <Profile />
+  <div class="metadata" style:--metadata="metadata">
+    <div class="profile">
+      <Profile />
+    </div>
+
+    <div class="security">
+      <Security />
+    </div>
   </div>
 
-  <div class="security">
-    <Security />
+  <div class="globalActions" style:--globalActions="globalActions">
+    <Actions/>
   </div>
   
   <style>
+    .mainContent {
+      grid-area: 1 / 5 / -1 / -1;
+      view-transition-name: mainContent;
+      
+      border-width: 0.1vh;
+      border-color: var(--text-color);
+    }
+    .metadata {
+      grid-area: 1 / 1 / 9 / 5;
+      view-transition-name: metadata;
+
+      border-width: 0.1vh;
+      border-color: var(--text-color);
+    }
+    .globalActions {
+      grid-area: 9 / 1 / -1 / 5;
+      view-transition-name: globalActions;
+
+      border-width: 0.1vh;
+      border-color: var(--text-color);
+      padding: 2rem;
+      display: flex;
+      align-items: end;
+    }
     article {
       display: flex;
       flex-direction: column;
       gap: 1rem;
       padding: 1rem;
     }
-  
-    .accountSettings {
-      grid-area: 1 / 1 / 10 / 9;
-    }
-    .security {
-      grid-area: 4 / 9 / 5 / -1;
-    }
 
     .profile {
-      grid-area: 1 / 9 / 4 / -1;
       display: flex;
       flex-direction: column;
       gap: 1rem;
