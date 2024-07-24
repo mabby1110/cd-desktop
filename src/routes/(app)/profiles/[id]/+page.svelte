@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Button from "$lib/components/Button.svelte";
+    import Actions from "$lib/components/Actions.svelte";
     import PostComponent from "$lib/components/PostComponent.svelte";
     import { pb } from "$lib/pocketbase";
     import type { PageData } from "./$types";
@@ -13,7 +13,7 @@
     <title>{result.user ? result.user.name : "User not found"} - CS</title>
   </svelte:head>
   
-  <div class="userInfo">
+  <div class="metadata" style:--metadata="metadata">
     <header>
       {#if result.user}
         <div class="first-row">
@@ -42,7 +42,7 @@
     </header>
   </div>
 
-  <div class="posts">
+  <div class="mainContent" style:--mainContent="mainContent">
     {#if result.posts}
       {#await result.posts}
         <article>
@@ -59,11 +59,15 @@
       {/await}
     {/if}
   </div>
-  
+
+  <div class="globalActions" style:--globalActions="globalActions">
+    <Actions/>
+  </div>
+
   <style>
-    .posts {
-      grid-area: 3 / 1 / 12 / 12;
-      view-transition-name: mainContentTrans;
+    .mainContent {
+      grid-area: 3 / 5 / 13 / 13;
+      view-transition-name: mainContent;
       overflow: scroll;
 
       padding: 1rem;
@@ -72,18 +76,29 @@
       flex-wrap: wrap;
       gap: 1rem;
 
-      border-width: 0 0.1vh 0.1vh 0;
+      border-width: 0.1vh;
       border-color: var(--text-color);
     }
 
-    .userInfo {
-      grid-area: 1 / 1 / 3 / 12;
-      view-transition-name: userTrans;
+    .metadata {
+      grid-area: 1 / 1 / 3 / 13;
+      view-transition-name: metadata;
 
-      border-width: 0 0.1vh 0.1vh 0;
+      border-width: 0.1vh;
       border-color: var(--text-color);
     }
 
+    .globalActions {
+        grid-area: 3 / 1 / 13 / 5;
+        view-transition-name: globalActions;
+        z-index: 1;
+
+        padding: 1rem;
+        display: flex;
+        align-items: end;
+        border-width: 0.1vh;
+        border-color: var(--text-color);
+    }
     article{
       background-color: var(--primary-color);
       border-radius: 8px;

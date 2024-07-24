@@ -10,7 +10,7 @@
 </script>
 
 {#if showMenu}
-    <div class="overlay" on:click={() => showMenu = false}></div>
+    <!-- <div class="overlay" on:click={() => showMenu = false}></div> -->
     <div class="sidebar">
         <button on:click={() => {
             showMenu = false;
@@ -40,12 +40,7 @@
 
 <style>
     .sidebar {
-        position: fixed;
-        display: nonecx ;
-        top: 0;
-        right: 0;
-        height: 100%;
-        width: 250px; /* Adjust the width as needed */
+        grid-area: 5 / 1 / 5 / 12;
         background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
         color: white;
         padding: 20px;

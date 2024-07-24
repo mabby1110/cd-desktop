@@ -58,23 +58,6 @@
   </div>
   <div class="cunt">
     <slot />
-    <div class="userActions">
-      <div class="newPost">
-        {#if data.authenticated}
-          <Link href="/new" variant="primary" size="large">
-            <iconify-icon icon="mingcute:add-fill"></iconify-icon>
-            <span> Create </span>
-          </Link>
-        {:else}
-          <Link href="/auth" variant="primary" size="large">
-            Create an account
-          </Link>
-        {/if}
-      </div>
-      <div class="shoppingCart">
-        <ShoppingCart/>
-      </div>
-    </div>
   </div>
 </main>
 
@@ -87,15 +70,6 @@
     
     overflow: scroll;
     height: 100vh;
-  }
-
-  .userActions {
-    grid-area: 12 / 1 / 13 / 5;
-    z-index: 1;
-
-    padding-left: 2rem;
-    display: flex;
-    align-items: center;
   }
 
   .navbar > a {

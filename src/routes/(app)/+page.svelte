@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Actions from "$lib/components/Actions.svelte";
+    import { fade, fly, draw } from "svelte/transition";
     import PostComponent from "$lib/components/PostComponent.svelte";
     import type { PageData } from "./$types";
   
@@ -9,7 +11,7 @@
   <svelte:head>
     <title>Home - CS</title>
   </svelte:head>
-  <div class="home">
+  <div class="mainContent" style:--mainContent="mainContent">
     {#if data.result["not-found"]}
       <article><h1>No posts found</h1></article>
     {:else if data.result.posts}
@@ -32,18 +34,28 @@
     {/if}
   </div>
 
-  <div class="owner" style:--userTrans="{selectedPost}">
+  <div class="metadata" style:--metadata="metadata">
+    metadata
     {selectedPost}
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d239065.04851389918!2d-103.63913292105042!3d20.572068413840732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428aee580d14005%3A0x29c32d113930043d!2sUniversidad%20Aut%C3%B3noma%20de%20Guadalajara!5e0!3m2!1ses!2smx!4v1721789053787!5m2!1ses!2smx" 
+      width="auto"
+      height="auto"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 
-  <div class="map">
-    map
+  <div class="globalActions" style:--globalActions="globalActions">
+    <Actions/>
   </div>
-  
+
   <style>
-    .home {
+    .mainContent {
       grid-area: 1 / 5 / last-line / last-line;
-      view-transition-name: mainContentTrans;
+      view-transition-name: mainContent;
       overflow: scroll;
 
       padding: 1rem;
@@ -51,26 +63,29 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
+      border-width: 0.1vh;
+      border-color: var(--text-color);
     }
-    
 
-
-    .owner {
+    .metadata {
       grid-area: 1 / 1 / 5 / 5;
-      view-transition-name: userTrans;
+      view-transition-name: metadata;
 
-      margin: 0 0 0 2rem;
-      border-width: 0 0.1vh 0.1vh 0;
+      border-width: 0.1vh;
       border-color: var(--text-color);
     }
+    .globalActions {
+        grid-area: 5 / 1 / 13 / 5;
+        view-transition-name: globalActions;
+        z-index: 1;
 
-    .map {
-      grid-area: 5 / 1 / 12 / 5;
-      margin: 0 0 0 2rem;
-      border-width: 0 0.1vh 0.1vh 0;
-      border-color: var(--text-color);
+        padding: 2rem;
+        display: flex;
+        align-items: end;
+        border-width: 0.1vh;
+        border-color: var(--text-color);
     }
-  
+
     article {
       view-transition-name: var(--userTrans);
       background-color: var(--primary-color);
