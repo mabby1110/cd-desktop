@@ -5,7 +5,6 @@
     import type { PageData } from "./$types";
   
     export let data: PageData;
-    let selectedPost = ""
   </script>
   
   <svelte:head>
@@ -21,12 +20,10 @@
         {#each posts as post}
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-          <article
-            on:click={()=>{selectedPost = "trans-"+post.id}}
-            class="postComponent"
-          >
-            <PostComponent authModel={data.authModel} {post}/>
-          </article>
+          <PostComponent
+            authModel={data.authModel}
+            {post}
+          />
         {:else}
           <article><h1>No posts found</h1></article>
         {/each}
@@ -36,7 +33,6 @@
 
   <div class="metadata" style:--metadata="metadata">
     metadata
-    {selectedPost}
     <!-- svelte-ignore a11y-missing-attribute -->
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d239065.04851389918!2d-103.63913292105042!3d20.572068413840732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428aee580d14005%3A0x29c32d113930043d!2sUniversidad%20Aut%C3%B3noma%20de%20Guadalajara!5e0!3m2!1ses!2smx!4v1721789053787!5m2!1ses!2smx" 
@@ -49,7 +45,7 @@
   </div>
 
   <div class="globalActions" style:--globalActions="globalActions">
-    <Actions/>
+    <Actions authModel={data.authModel}/>
   </div>
 
   <style>
@@ -57,23 +53,22 @@
       grid-area: 1 / 5 / last-line / last-line;
       view-transition-name: mainContent;
       overflow: scroll;
-
       padding: 1rem;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      border-width: 0.1vh;
+      border-width: 0.1vh 0 0 0.1vh;
       border-color: var(--text-color);
+
+      display: flex;
+      flex-wrap: wrap;
     }
 
     .metadata {
       grid-area: 1 / 1 / 5 / 5;
+      view-transition-name: metadata;
 
-      border-width: 0.1vh;
+      border-width: 0.1vh 0.1vh 0.1vh 0 ;
       border-color: var(--text-color);
     }
-    
+
     .globalActions {
         grid-area: 5 / 1 / 13 / 5;
         view-transition-name: globalActions;
@@ -82,21 +77,11 @@
         padding: 2rem;
         display: flex;
         align-items: end;
-        border-width: 0.1vh;
+        border-width: 0.1vh 0.1vh 0.1vh 0 ;
         border-color: var(--text-color);
     }
 
-    article {
-      view-transition-name: var(--userTrans);
-      background-color: var(--primary-color);
-      border-radius: 8px;
-      border: solid 1px var(--tertiary-color);
-      max-width: 40rem;
-      flex-grow: 1;
-      width: 60vw;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .globalActions iframe {
+      view-transition-name: none;
     }
   </style>

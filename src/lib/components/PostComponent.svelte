@@ -26,7 +26,18 @@
 
   // logica expandir post
   let expandPost = false
-  
+  let imgIndex = 0
+
+  function nextImage() {
+    imgIndex = (imgIndex + 1) % post.media.length; // Cycle through the images
+  }
+
+  function expand() {
+    if (event.target.classList.contains('postContent') || event.target.classList.contains('expand')) {
+      expandPost = false==expandPost
+    }
+  }
+
   cartItems.subscribe((newCartValue) => {
     cart = newCartValue
     cartItemIndex = cart.findIndex((item) => { return item.id === post.id })
@@ -43,118 +54,126 @@
   });
 </script>
 
-<section class="actions">
-  <a href="/profiles/{post.user.id}" class="account">
-    {#if $pb && post.user.photo}
-      <img
-        src={$pb.getFileUrl(post.user, post.user.photo)}
-        alt={post.user.name}
-        class="profileImg"
-      />
-    {:else}
-      <iconify-icon icon="ic:round-account-circle"></iconify-icon>
-    {/if}
-    <p>{post.user.name}</p>
-  </a>
-
-  <div class="interactions">
-    {#if authModel}
-      <form
-        action="/posts/{post.id}?/toggleLiked&redirect={$page.url.pathname}"
-        method="post"
-        use:enhance={() => {
-          if (post && authModel) {
-            if (post.likes.includes(authModel.id)) {
-              let { id } = authModel;
-              post.likes = post.likes.filter((user) => user !== id);
-            } else {
-              post.likes = [...post.likes, authModel.id];
-            }
-          }
-
-          return async ({ update }) => {
-            await update({ invalidateAll: true, reset: true });
-          };
-        }}
-      >
-        <Button size="icon" variant="ghost">
-          {#key post.likes}
-            <iconify-icon
-              in:fade={{ duration: 200 }}
-              icon="mdi:heart{post.likes.includes(authModel.id)
-                ? ''
-                : '-outline'}"
-              class:liked={post.likes.includes(authModel.id)}
-            ></iconify-icon>
-          {/key}
-        </Button>
-      </form>
-    {/if}
-    {#if authModel && post.user.id === authModel.id}
-      <form action="/posts/{post.id}?/deletePost" method="post">
-        <Button size="icon" variant="destructive">
-          <iconify-icon icon="ph:trash"></iconify-icon>
-        </Button>
-      </form>
-    {/if}
-  </div>
-</section>
-
-<header>
-  <a href="/posts/{post.id}" class="account"><h1>{post.title}{post.id}</h1></a>
-  <div class="flex">
-    <b>${post.price}</b>
-    {#if post.id && expandPost}
-      <button 
-        on:click={()=>removeFromCart(post.id)}
-        class="flex items-center"
-      >
-        <iconify-icon icon="material-symbols:remove" width="1rem" height="1rem"></iconify-icon>
-      </button>
-
-      {#if cartProduct}
-        <p>{cartProduct.quantity}</p>
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div
+  class="postContent"
+  class:small={!expandPost}
+  class:big={expandPost}
+  on:click={expand}
+  >
+  <section class="userActions">
+    <a href="/profiles/{post.user.id}" class="account">
+      {#if $pb && post.user.photo}
+        <img
+          src={$pb.getFileUrl(post.user, post.user.photo)}
+          alt={post.user.name}
+          class="profileImg"
+        />
+      {:else}
+        <iconify-icon icon="ic:round-account-circle"></iconify-icon>
       {/if}
-
-      <button 
-        on:click={()=>addToCart(post.id)}
-        class="flex items-center"
-      >
-        <iconify-icon icon="material-symbols:add" width="1rem" height="1rem"></iconify-icon>
-      </button>
-    {/if}
-  </div>
-</header>
-
-<pre>
-  {#if expandPost}
-    <p bind:this={contentRef}>{post.content}</p>
-  {/if}
-</pre>
-
-<section class="tags">
-  {#each post.tags as tag}
-    <div class="tag">
-      <span>
-        {tag}
-      </span>
+      <p>{post.user.name}</p>
+    </a>
+  
+    <div class="interactions">
+      {#if authModel}
+        <form
+          action="/posts/{post.id}?/toggleLiked&redirect={$page.url.pathname}"
+          method="post"
+          use:enhance={() => {
+            if (post && authModel) {
+              if (post.likes.includes(authModel.id)) {
+                let { id } = authModel;
+                post.likes = post.likes.filter((user) => user !== id);
+              } else {
+                post.likes = [...post.likes, authModel.id];
+              }
+            }
+  
+            return async ({ update }) => {
+              await update({ invalidateAll: true, reset: true });
+            };
+          }}
+        >
+          <Button size="icon" variant="ghost">
+            {#key post.likes}
+              <iconify-icon
+                in:fade={{ duration: 200 }}
+                icon="mdi:heart{post.likes.includes(authModel.id)
+                  ? ''
+                  : '-outline'}"
+                class:liked={post.likes.includes(authModel.id)}
+              ></iconify-icon>
+            {/key}
+          </Button>
+        </form>
+      {/if}
+      {#if authModel && post.user.id === authModel.id}
+        <form action="/posts/{post.id}?/deletePost" method="post">
+          <Button size="icon" variant="destructive">
+            <iconify-icon icon="ph:trash"></iconify-icon>
+          </Button>
+        </form>
+      {/if}
     </div>
-  {/each}
-</section>
+  </section>
+  
+  <header>
+    <a href="/posts/{post.id}" class="account"><h1>{post.title}</h1></a>
+    <b>${post.price}</b>
+    <div class="addToCart">
+      {#if post.id && expandPost}
+        <!-- borrar post -->
+        <button 
+          on:click={()=>removeFromCart(post.id)}
+          class="flex items-center"
+        >
+          <iconify-icon icon="material-symbols:remove" width="1rem" height="1rem"></iconify-icon>
+        </button>
+  
+        {#if cartProduct}
+          <p>{cartProduct.quantity}</p>
+        {/if}
+  
+        <button 
+          on:click={()=>addToCart(post.id)}
+          class="flex items-center"
+        >
+          <iconify-icon icon="material-symbols:add" width="1rem" height="1rem"></iconify-icon>
+        </button>
+      {/if}
+    </div>
+    {#if expandPost}
+    <pre>
+      <p bind:this={contentRef}>{post.content}</p>
+    </pre>
+    {/if}
+  </header>
+  
+  <section class="media">
+    {#if $pb && post.media} 
+      <!-- {#each post.media as file} -->
+        <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+        <img
+          src={$pb.getFileUrl(post,post.media[imgIndex])}
+          alt={post.media[0].name || 'Post media'}
+          class="mediaImg"
+          on:click={nextImage}
+        />
+      <!-- {/each} -->
+    {/if}
+  </section>
 
-<section class="media">
-  {#if $pb && post.media} 
-    {#each post.media as file}
-      <img
-        src={$pb.getFileUrl(post,file)}
-        alt={file.name || 'Post media'}
-        class="mediaImg"
-      />
+  <section class="tags">
+    {#each post.tags as tag}
+      <div class="tag">
+        <pre>{tag}</pre>
+      </div>
     {/each}
-  {/if}
-</section>
+  </section>
 
-<section class="comments">
+  <section class="comments">
   {#if $pb && post.expand.comments && expandPost}
     <div class="comments-section">
       <h3 class="comments-title">Comments</h3>
@@ -201,228 +220,236 @@
       </Button>
     </form>
   {/if}
-</section>
+  </section>
 
-{#if expandPost}
-  <button on:click={()=>{expandPost=false}}>...</button>
-{:else}
-  <button on:click={()=>{expandPost=true}}>...</button>
-{/if}
+  <div class="expand"><p>...</p></div>
+</div>
 
 <style>
-  .media {
+.small {
+  flex: 1 1 33%;
+  min-width: 20rem;
+  max-width: 50%;
+  min-height: 20rem;
+  max-height: 50%;
+}
+.big {
+  flex: 1 1 66%;
+  min-width: 20rem;
+  max-width: 100%;
+  min-height: 20rem;
+}
+.postContent {
+  height: 100%;
   display: grid;
-  gap: 1rem; /* Adjust the gap between grid items as needed */
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(3rem, 2fr) 2fr 8fr 1fr auto 0.5fr;
+  background-color: var(--primary-color);
+  border-radius: 8px;
+  border: solid 1px var(--tertiary-color);
+  padding: 1rem;
+
+  transition: grid 0.3s ease; /* Adjust timing as needed */
+}
+.userActions {
+  grid-area: 1 / 1 / 2  / 2;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 4px;
+}
+header {
+  grid-area: 2 / 1 / 3  / 2;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.media {
+  grid-area: 3 / 1 / 4  / 2;
+  justify-self: center;
+  background-color: #065fd4;
+  display: flex;
+  width: 80%;
+  height: 100%;
+  overflow: hidden;
+}
+.tags {
+  grid-area: 4 / 1 / 5  / 2;
+  display: flex;
+  justify-content: baseline;
+  gap: 8px;
+  overflow: scroll;
+}
+.comments {
+  grid-area: 5 / 1 / 6  / 2;
+}
+.expand {
+  grid-area: 6 / 1 / 7  / 2;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-@media (min-width: 0px) and (max-width: 599px) {
-  .media {
-    grid-template-columns: 1fr 1fr; /* 2 columns for small screens */
-  }
-}
-
-@media (min-width: 600px) and (max-width: 899px) {
-  .media {
-    grid-template-columns: 1fr 1fr 1fr; /* 3 columns for medium screens */
-  }
-}
-
-@media (min-width: 900px) {
-  .media {
-    grid-template-columns: repeat(3, 1fr); /* 3 columns for large screens */
-  }
+.expand p{
+  pointer-events: none;
 }
 
 .mediaImg {
   width: 100%;
-  height: auto;
-  object-fit: cover; /* Adjust as needed */
+  height: 100%;
+  object-fit:cover;
 }
 
-  pre {
-    tab-size: 4;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    max-height: 60vh;
-  }
+pre {
+  flex: 1 1 100%;
+  tab-size: 4;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-height: 60vh;
+}
 
-  pre p {
-    padding: 0.6rem;
-    text-wrap: wrap;
-  }
+pre p {
+  padding: 0.6rem;
+  text-wrap: wrap;
+}
 
-  code {
-    border-radius: 8px;
-    padding: 1rem;
-    overflow-x: scroll;
-  }
+h1 {
+  font-size: 20px;
+}
 
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+iconify-icon {
+  font-size: 20px;
+}
 
-  h1 {
-    font-size: 24px;
-  }
+.account {
+  flex: 1 1 50%;
+  display: flex;
+  justify-content:baseline;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.addToCart {
+  display: flex;
+}
+.interactions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
 
-  iconify-icon {
-    font-size: 20px;
-  }
+.interactions iconify-icon {
+  font-size: 24px;
+}
 
-  .language {
-    position: absolute;
-    background-color: var(--secondary-color);
-    padding: 8px 1rem;
-    border-radius: 8px;
-    top: 1rem;
-    right: 1rem;
-    color: var(--accent-color);
-  }
+.liked {
+  color: var(--accent-color);
+}
 
-  .actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    overflow: scroll;
-    padding: 4px;
-  }
+.profileImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 100px;
+  object-fit: cover;
+}
 
-  .account {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-  }
+.account iconify-icon {
+  font-size: 32px;
+}
 
-  .interactions {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-  }
+.tag {
+  padding: 5px 10px;
+  background-color: var(--secondary-color);
+  font-size: 14px;
+  border-radius: 8px;
+  width: fit-content;
+  height: fit-content;
+  
+  display: flex;
+  gap: 2px;
+}
+.tag::before {
+  content: "#";
+  color: var(--accent-color);
+}
 
-  .interactions iconify-icon {
-    font-size: 24px;
-  }
+/* comment section */
+.comments-section {
+  margin-top: 20px;
+  font-family: 'Roboto', Arial, sans-serif;
+}
 
-  .liked {
-    color: var(--accent-color);
-  }
+.comments-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
 
-  .profileImg {
-    width: 32px;
-    height: 32px;
-    border-radius: 100px;
-    object-fit: cover;
-  }
+.comment {
+  display: flex;
+  margin-bottom: 16px;
+}
 
-  .mediaImg {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
+.comment-avatar {
+  margin-right: 16px;
+}
 
-  .account iconify-icon {
-    font-size: 32px;
-  }
+.avatar-img, .avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
 
-  .tags {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
+.avatar-placeholder {
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #757575;
+}
 
-  .tag {
-    padding: 5px 10px;
-    background-color: var(--secondary-color);
-    font-size: 14px;
-    border-radius: 8px;
-  }
+.comment-content {
+  flex-grow: 1;
+}
 
-  .tag::before {
-    content: "#";
-    color: var(--accent-color);
-  }
+.comment-author {
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
 
-  /* comment section */
-  .comments-section {
-    margin-top: 20px;
-    font-family: 'Roboto', Arial, sans-serif;
-  }
+.comment-text {
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.4;
+}
 
-  .comments-title {
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 24px;
-  }
+.show-more {
+  color: #065fd4;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 16px;
+}
 
-  .comment {
-    display: flex;
-    margin-bottom: 16px;
-  }
+.comment-form {
+  margin-top: 24px;
+}
 
-  .comment-avatar {
-    margin-right: 16px;
-  }
+.comment-input {
+  width: 100%;
+  min-height: 24px;
+  padding: 8px;
+  color: black;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
 
-  .avatar-img, .avatar-placeholder {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-
-  .avatar-placeholder {
-    background-color: #e0e0e0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #757575;
-  }
-
-  .comment-content {
-    flex-grow: 1;
-  }
-
-  .comment-author {
-    font-size: 13px;
-    font-weight: 500;
-    margin: 0 0 4px 0;
-  }
-
-  .comment-text {
-    font-size: 14px;
-    margin: 0;
-    line-height: 1.4;
-  }
-
-  .show-more {
-    color: #065fd4;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    margin-top: 16px;
-  }
-
-  .comment-form {
-    margin-top: 24px;
-  }
-
-  .comment-input {
-    width: 100%;
-    min-height: 24px;
-    padding: 8px;
-    color: black;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
-  }
-
-  .comment-submit {
-    margin-top: 8px;
-    float: right;
-  }
+.comment-submit {
+  margin-top: 8px;
+  float: right;
+}
 </style>

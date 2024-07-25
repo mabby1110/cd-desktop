@@ -76,7 +76,7 @@
       flex-wrap: wrap;
       gap: 1rem;
 
-      border-width: 0.1vh;
+      border-width: 0.1vh 0 0 0.1vh;
       border-color: var(--text-color);
     }
 
@@ -99,6 +99,7 @@
         border-width: 0.1vh;
         border-color: var(--text-color);
     }
+    
     article{
       background-color: var(--primary-color);
       border-radius: 8px;
