@@ -48,6 +48,9 @@
   </div>
 
   <style>
+    div {
+      padding: 1rem;
+    }
     .mainContent {
       grid-area: 1 / 5 / 13 / 13;
       view-transition-name: mainContent;

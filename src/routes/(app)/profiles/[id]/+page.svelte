@@ -60,9 +60,10 @@
     {/if}
   </div>
 
-  <div class="globalActions" style:--globalActions="globalActions">
-    <Actions/>
+  <div class="actions" style:--actions="actions">
+    <Actions authModel={data.authModel}/>
   </div>
+
 
   <style>
     .mainContent {
@@ -82,19 +83,16 @@
     .metadata {
       grid-area: 1 / 1 / 3 / 13;
 
-      border-width: 0.1vh;
+      border-width: 0.1vh 0.1vh 0.1vh 0;
       border-color: var(--text-color);
     }
 
-    .globalActions {
+    .actions {
         grid-area: 3 / 1 / 13 / 5;
-        view-transition-name: globalActions;
+        view-transition-name: actions;
         z-index: 1;
 
-        padding: 1rem;
-        display: flex;
-        align-items: end;
-        border-width: 0.1vh;
+        border-width: 0.1vh 0.1vh 0.1vh 0 ;
         border-color: var(--text-color);
     }
     
