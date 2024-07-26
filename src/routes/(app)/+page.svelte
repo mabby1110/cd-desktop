@@ -32,12 +32,11 @@
   </div>
 
   <div class="metadata" style:--metadata="metadata">
-    metadata
     <!-- svelte-ignore a11y-missing-attribute -->
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d239065.04851389918!2d-103.63913292105042!3d20.572068413840732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428aee580d14005%3A0x29c32d113930043d!2sUniversidad%20Aut%C3%B3noma%20de%20Guadalajara!5e0!3m2!1ses!2smx!4v1721789053787!5m2!1ses!2smx" 
-      width="auto"
-      height="auto"
+      width="100%"
+      height="100%"
       style="border:0;"
       allowfullscreen=""
       loading="lazy"
@@ -50,20 +49,21 @@
 
   <style>
     .mainContent {
-      grid-area: 1 / 5 / last-line / last-line;
+      grid-area: 1 / 5 / 13 / 13;
       view-transition-name: mainContent;
       overflow: scroll;
       padding: 1rem;
       border-width: 0.1vh 0 0 0.1vh;
       border-color: var(--text-color);
-
+      
       display: flex;
       flex-wrap: wrap;
+      justify-content: flex-start;
+      align-content: flex-start;
     }
 
     .metadata {
       grid-area: 1 / 1 / 5 / 5;
-      view-transition-name: metadata;
 
       border-width: 0.1vh 0.1vh 0.1vh 0 ;
       border-color: var(--text-color);
@@ -81,7 +81,7 @@
         border-color: var(--text-color);
     }
 
-    .globalActions iframe {
-      view-transition-name: none;
+    iframe {
+      view-transition-name: c;
     }
   </style>

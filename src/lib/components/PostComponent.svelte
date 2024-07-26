@@ -231,7 +231,7 @@
   min-width: 20rem;
   max-width: 50%;
   min-height: 20rem;
-  max-height: 50%;
+  max-height: 40%;
 }
 .big {
   flex: 1 1 66%;

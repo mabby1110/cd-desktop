@@ -72,7 +72,6 @@
 
       padding: 1rem;
       display: flex;
-      align-items: start;
       flex-wrap: wrap;
       gap: 1rem;
 
@@ -82,7 +81,6 @@
 
     .metadata {
       grid-area: 1 / 1 / 3 / 13;
-      view-transition-name: metadata;
 
       border-width: 0.1vh;
       border-color: var(--text-color);
