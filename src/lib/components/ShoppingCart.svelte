@@ -40,7 +40,7 @@
 
 <style>
     .sidebar {
-        grid-area: 5 / 1 / 5 / 12;
+        grid-area: 1 / 5 / 5 / 12;
         background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
         color: white;
         padding: 20px;

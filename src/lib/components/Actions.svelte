@@ -5,20 +5,67 @@
 
     
     export let authModel: User | undefined;
+    let view = "seleccione una accion"
 </script>
+<div class="actionContainer">
+    <div class="actionContent">
+        {#if view == "shoppingCart"}
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
+        </p>
+        {:else if view == "seleccione una accion"}
+        {view}
+        {/if}
+    </div>
+    <div class="actionButtons">
+        <div class="chat">
+            <iconify-icon icon="teenyicons:chat-typing-solid" width="3rem" height="3rem"></iconify-icon>
+        </div>
+        
+        <div class="newPost">
+        {#if authModel}
+            <Link href="/new" variant="primary" size="large">
+            <iconify-icon icon="mingcute:add-fill"></iconify-icon>
+            </Link>
+        {:else}
+            <Link href="/auth" variant="primary" size="large">
+            Create an account
+            </Link>
+        {/if}
+        </div>
+        
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div class="shoppingCart"
+            on:click={()=>{view=view=="shoppingCart"?"seleccione una accion":"shoppingCart"}}
+        >
+            <ShoppingCart/>
+        </div>
+    </div>
+</div>
 
-<div class="newPost">
-{#if authModel}
-    <Link href="/new" variant="primary" size="large">
-    <iconify-icon icon="mingcute:add-fill"></iconify-icon>
-    <span> Create </span>
-    </Link>
-{:else}
-    <Link href="/auth" variant="primary" size="large">
-    Create an account
-    </Link>
-{/if}
-</div>
-<div class="shoppingCart">
-    <ShoppingCart/>
-</div>
+<style>
+    .actionContainer {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 8fr 2fr;
+    }
+    .actionButtons {
+        grid-area: 2 / 1 / 3 / 2;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .actionContent {
+        height: 100%;
+        grid-area: 1 / 1 / 2 / 2;
+        overflow: scroll;
+    }
+</style>

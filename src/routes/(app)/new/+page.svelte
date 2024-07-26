@@ -152,6 +152,7 @@
 
 <style>
   article {
+    grid-area: 1 / 1 / -1 / -1;
     padding: 1rem;
     display: flex;
     justify-content: center;

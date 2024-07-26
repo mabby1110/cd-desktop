@@ -39,8 +39,8 @@
   
     .large {
       font-size: 18px;
-      padding: 12px 20px;
-      border-radius: 8px;
+      padding: 1rem;
+      border-radius: 5%;
     }
   
     .icon {
