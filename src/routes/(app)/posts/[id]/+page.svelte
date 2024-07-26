@@ -35,6 +35,7 @@
       {data.post ? data.post.title : "Post not found"}
     </title>
   </svelte:head>
+<article>
 
   {#if data.post}
   <div class="flex flex-col md:flex-row">
@@ -142,12 +143,12 @@
         {/if} -->
       </button>
       <DescriptionToggle
-        title="Care"
-        description="This is a limited edition production run. Printing starts when the drop ends."
+        title="Tags"
+        description="{data.post.tags}"
       />
       <DescriptionToggle
         title="Details"
-        description="This is a limited edition production run. Printing starts when the drop ends. Reminder: Bad Boys For Life. Shipping may take 10+ days due to COVID-19."
+        description="This is a limited edition production run. Shipping may take 10+ days due to COVID-19."
       />
     </div>
 
@@ -169,11 +170,18 @@
         {/each}
       </ul>
     </div>
-     -->
+    -->
   </div>
   {/if}
+</article>
   
   <style>
+    article {
+      grid-area: 1 / 1 / -1 / -1;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+    }
     .lds-ring {
       display: inline-block;
       position: relative;

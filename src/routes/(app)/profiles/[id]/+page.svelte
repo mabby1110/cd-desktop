@@ -30,11 +30,11 @@
             <h1>{result.user.name}</h1>
           </div>
         </div>
-  
+        
         {#if result.user.bio}
-          <hr />
-  
           <p class="bio">{result.user.bio}</p>
+        {:else}
+          <p>Sin información</p>
         {/if}
       {:else}
         <h1 class="not-found">{"User not found"}</h1>
@@ -50,9 +50,7 @@
         </article>
       {:then posts}
         {#each posts as post}
-          <article>
-            <PostComponent authModel={data.authModel} {post} />
-          </article>
+          <PostComponent authModel={data.authModel} {post} />
         {:else}
           <p>No posts found</p>
         {/each}
@@ -82,6 +80,7 @@
 
     .metadata {
       grid-area: 1 / 1 / 3 / 13;
+      padding: 1rem;
 
       border-width: 0.1vh 0.1vh 0.1vh 0;
       border-color: var(--text-color);
@@ -112,12 +111,11 @@
       background-color: var(--primary-color);
       border-radius: 8px;
       border: solid 1px var(--tertiary-color);
-      max-width: 40rem;
+      height: 100%;
       flex-grow: 1;
-      width: 60vw;
       padding: 1rem;
       display: flex;
-      flex-direction: column;
+      align-items: center;
     }
   
     article {
@@ -155,8 +153,8 @@
     }
   
     img {
-      height: 40px;
-      width: 40px;
+      height: 100%;
+      width: 100%;
       object-fit: cover;
     }
   

@@ -6,21 +6,32 @@
     
     export let authModel: User | undefined;
     let view = "seleccione una accion"
+
+    import { get } from 'svelte/store';
+
+    import { cartItems } from '../../shoppingCart';
+    let cart = get(cartItems);
+    cartItems.subscribe((newCartValue) => {
+        cart = newCartValue
+    })
 </script>
+
 <div class="actionContainer">
     <div class="actionContent">
         {#if view == "shoppingCart"}
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis rem veritatis mollitia! Laudantium, rerum? Eum excepturi doloremque, assumenda provident exercitationem quis nulla doloribus corporis? Reprehenderit quidem numquam aut minus impedit.
-        </p>
+            {#if cart.length > 0}
+                <!-- <div class="overlay" on:click={() => showMenu = false}></div> -->
+                <div class="sidebar">
+                    <br>
+                    {#each cart as item}
+                        <p>{item.id} - {item.quantity}</p>
+                    {/each}
+                </div>
+            {:else}
+                Vacio
+            {/if}
         {:else if view == "seleccione una accion"}
-        {view}
+            {view}
         {/if}
     </div>
     <div class="actionButtons">
