@@ -1,5 +1,7 @@
 <script>
     import { createEventDispatcher } from 'svelte';
+    import Button from './Button.svelte';
+
     const dispatch = createEventDispatcher();
     let searchTag = '';
     let searchTitle = '';
@@ -13,19 +15,29 @@
             user: searchUser
         });
     }
+    function handleReset() {
+        searchUser = '';
+        searchTitle = '';
+        searchTag = '';
+        // Optionally, you can also trigger a new search here to show all results
+        handleFilter();
+    }
 </script>
 
 <style>
     form {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 20px;
     }
 
     input {
-    padding: 5px;
-    font-size: 16px;
-    color: black;
+        width: 26%;
+        padding: 5px;
+        font-size: 16px;
+        color: black;
     }
 </style>
 
@@ -33,5 +45,10 @@
     <input type="text" placeholder="Buscar por usuario" bind:value={searchUser} />
     <input type="text" placeholder="Buscar por título" bind:value={searchTitle} />
     <input type="text" placeholder="Buscar por tag" bind:value={searchTag} />
-    <button type="submit">Buscar</button>
+    <Button variant="primary">Buscar</Button>
+    {#if searchTag || searchTitle || searchUser}
+    <button type="button" on:click={handleReset}>
+        <iconify-icon icon="ep:close-bold" width="1rem" height="1rem"></iconify-icon>
+    </button>
+    {/if}
 </form>

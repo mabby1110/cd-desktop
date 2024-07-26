@@ -60,7 +60,7 @@
     .primary {
       background-color: var(--accent-color);
       border: solid 1px var(--accent-color);
-      color: var(--primary-color);
+      color: var(--text-color);
     }
   
     .primary:hover:not(:disabled) {
