@@ -32,31 +32,30 @@
       <Security />
     </div>
   </div>
-
-  <div class="globalActions" style:--globalActions="globalActions">
-    <Actions/>
-  </div>
   
   <style>
     .mainContent {
       grid-area: 1 / 5 / -1 / -1;
       view-transition-name: mainContent;
       
-      border-width: 0.1vh;
+      padding: 1rem;
+      border-width: 0.1vh 0 0 0.1vh;
       border-color: var(--text-color);
     }
     .metadata {
       grid-area: 1 / 1 / 9 / 5;
       view-transition-name: metadata;
-
-      border-width: 0.1vh;
+      padding: 1rem;
+      border-width: 0.1vh 0.1vh 0 0;
       border-color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      gap:1rem;
     }
     .globalActions {
       grid-area: 9 / 1 / -1 / 5;
       view-transition-name: globalActions;
 
-      border-width: 0.1vh;
       border-color: var(--text-color);
       padding: 2rem;
       display: flex;
