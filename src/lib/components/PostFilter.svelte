@@ -18,7 +18,6 @@
 <style>
     form {
     display: flex;
-    flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
     }
@@ -26,12 +25,13 @@
     input {
     padding: 5px;
     font-size: 16px;
+    color: black;
     }
 </style>
 
 <form on:submit|preventDefault={handleFilter}>
-    <input type="text" placeholder="Buscar por tag" bind:value={searchTag} />
-    <input type="text" placeholder="Buscar por título" bind:value={searchTitle} />
     <input type="text" placeholder="Buscar por usuario" bind:value={searchUser} />
+    <input type="text" placeholder="Buscar por título" bind:value={searchTitle} />
+    <input type="text" placeholder="Buscar por tag" bind:value={searchTag} />
     <button type="submit">Buscar</button>
 </form>

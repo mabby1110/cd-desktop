@@ -42,11 +42,11 @@ export const load = (async ({ params }) => {
 
     const posts = await getPosts(pbInstance);
 
-    function filterPosts(tag?: string, title?: string, user?: string) {
+    function filterPosts(tag?: string, title?: string, username?: string) {
       return posts.filter(post => 
         (!tag || post.tags.includes(tag)) &&
         (!title || post.title.toLowerCase().includes(title.toLowerCase())) &&
-        (!user || post.user.expand.username.toLowerCase() === user.toLowerCase())
+        (!username || (post.expand?.user?.name && post.expand.user.name.toLowerCase().includes(username.toLowerCase())))
       );
     }
 
