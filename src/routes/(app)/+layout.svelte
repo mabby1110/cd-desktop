@@ -19,6 +19,7 @@
 <div class="background">
   <SphereBackground/>
 </div>
+
 <main>
   <ViewTransition />
   <div class="navbar">
