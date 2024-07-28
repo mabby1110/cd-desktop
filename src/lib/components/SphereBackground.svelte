@@ -26,7 +26,7 @@ onMount(() => {
 
     function init() {
         calculateGridSize()
-        camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
         camera.position.set(0, 1, amount/2);
         camera.lookAt(0, 1, 0);
 
@@ -158,35 +158,36 @@ onMount(() => {
         stats.update();
     }
 
-    function shouldBeBlack(x, y, z) {
-        // Formar una "C" en la cara lateral frontal donde z = 0
-        if (z === 9) {
-            // Línea vertical de la "C"
-            if ((y >= 5 && y <= 8 && x == 5)) {
-                return true;
-            }
-            if ((x >= 5 && x <= 8) && (y == 8 || y==4)) {
-                return true
-            }
-        }
-        
-        if (x === 9) {
-            // Línea vertical de la "D"
-            if ((y >= 4 && y <= 8 && z == 8)) {
-                return true;
-            }
-            // Curva superior e inferior de la "D"
-            if ((z >= 5 && z <= 7) && (y == 8 || y == 4)) {
-                return true;
-            }
-            // Curva derecha de la "D"
-            if ((z == 4) && (y == 5 || y == 6 || y == 7)) {
-                return true;
-            }
+    function shouldBeBlack(x, y) {
+    // Centering offset for both letters "C" and "D"
+    const centerX = 0;
+    const centerY = 0;
 
-        }
-        return false;
+    // Form the "C" shape, centered
+    if (x == centerX - 3 && (y <= centerY + 2 && y >= centerY - 2)) {
+        return true;
     }
+    if ((y == centerY + 2 || y == centerY - 2) && x < centerX && x > centerX - 3) {
+        return true;
+    }
+    
+    // Form the "D" shape, centered
+    if (x == centerX + 1 && (y <= centerY + 2 && y >= centerY - 2)) {
+        return true;
+    }
+    if ((y == centerY + 2 || y == centerY - 2) && x >= centerX + 2 && x <= centerX + 3) {
+        return true;
+    }
+    if (y == centerY + 1 && x == centerX + 3) {
+        return true;
+    }
+    if ((y <= centerY + 1 && y >= centerY - 1) && x == centerX + 4) {
+        return true;
+    }
+
+    return false;
+}
+
 });
 </script>
 
