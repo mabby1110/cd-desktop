@@ -4,6 +4,7 @@
   import { pb } from "$lib/pocketbase";
   import ShoppingCart from "$lib/components/ShoppingCart.svelte";
   import ViewTransition from "$lib/components/Navigation.svelte"
+  import Actions from "$lib/components/Actions.svelte";
 
   export let data: PageData;
 </script>

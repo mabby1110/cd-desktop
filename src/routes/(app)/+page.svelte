@@ -19,18 +19,20 @@
 <svelte:head>
   <title>Home - CS</title>
 </svelte:head>
-<div class="mainContent" style:--mainContent="mainContent">
-  <PostFilter on:filter={handleFilter}/>
-  {#if $filteredPosts.length === 0}
-    <article><h1>No posts found</h1></article>
-  {:else}
-    {#each $filteredPosts as post}
-      <PostComponent
-        authModel={data.authModel}
-        {post}
-      />
-    {/each}
-  {/if}
+<div class="main">
+  <div class="mainContent" style:--mainContent="mainContent">
+    <PostFilter on:filter={handleFilter}/>
+    {#if $filteredPosts.length === 0}
+      <article><h1>No posts found</h1></article>
+    {:else}
+      {#each $filteredPosts as post}
+        <PostComponent
+          authModel={data.authModel}
+          {post}
+        />
+      {/each}
+    {/if}
+  </div>
 </div>
 
 <div class="metadata" style:--metadata="metadata">
@@ -42,7 +44,8 @@
     style="border:0;"
     allowfullscreen=""
     loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"></iframe>
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
 </div>
 
 <div class="actions" style:--actions="actions">
@@ -50,40 +53,27 @@
 </div>
 
 <style>
-  div {
-    padding: 1rem;
-  }
+.main {
+  grid-area: 1 / 5 / 13 / 13;  
+}
   .mainContent {
-    grid-area: 1 / 5 / 13 / 13;
-    view-transition-name: mainContent;
     overflow: scroll;
     padding: 1rem;
-    border-width: 0.1vh 0 0 0.1vh;
-    border-color: var(--text-color);
-    
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: flex-start;
   }
 
-  .metadata {
-    grid-area: 1 / 1 / 5 / 5;
+.metadata {
+  grid-area: 1 / 1 / 5 / 5;
+}
 
-    border-width: 0.1vh 0.1vh 0.1vh 0 ;
-    border-color: var(--text-color);
-  }
+.actions {
+  grid-area: 5 / 1 / 13 / 5;
+}
 
-  .actions {
-      grid-area: 5 / 1 / 13 / 5;
-      view-transition-name: actions;
-      z-index: 1;
-
-      border-width: 0.1vh 0.1vh 0.1vh 0 ;
-      border-color: var(--text-color);
-  }
-
-  iframe {
-    view-transition-name: c;
-  }
+iframe {
+  view-transition-name: c;
+}
 </style>

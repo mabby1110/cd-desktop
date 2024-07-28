@@ -66,23 +66,6 @@
     </div>
 
     <div class="input-container">
-      <h2>Language</h2>
-
-      <select name="language" id="" bind:value={language}>
-        <option value="cs">C#</option>
-        <option value="c">C</option>
-        <option value="cpp">C++</option>
-        <option value="dart">Dart</option>
-        <option value="go">Go</option>
-        <option value="java">Java</option>
-        <option value="js">JavaScript</option>
-        <option value="ts">TypeScript</option>
-        <option value="py">Python</option>
-        <option value="rs">Rust</option>
-      </select>
-    </div>
-
-    <div class="input-container">
       <h2>Content</h2>
 
       <textarea

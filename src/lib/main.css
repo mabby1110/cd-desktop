@@ -45,8 +45,66 @@ body {
   height: 94vh;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(12, 1fr);
-}
+  grid-auto-flow: dense;
 
+}
+.main {
+  position: relative;
+}
+  .mainContent {
+    overflow: scroll;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+  }
+
+.metadata {
+  position: relative;
+  padding: 1rem;
+}
+  /* Línea derecha */
+  .metadata::after {
+    view-transition-name: metadata_r;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: white;
+  }
+
+  /* Línea inferior */
+  .metadata::before {
+    view-transition-name: metadata_b;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: white;
+  }
+
+.actions {
+  view-transition-name: actions;
+  position:relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+  .actions::after {
+      view-transition-name: actions_r;
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: white;
+    }
 .hljs {
   background: #282c34;
   color: #abb2bf;
