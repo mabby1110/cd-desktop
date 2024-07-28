@@ -245,6 +245,7 @@
   grid-template-columns: 1fr;
   grid-template-rows: minmax(3rem, 2fr) 2fr 8fr 1fr auto 0.5fr;
   background-color: var(--primary-color);
+  backdrop-filter: blur(0.3rem);
   border-radius: 8px;
   border: solid 1px var(--tertiary-color);
   padding: 1rem;

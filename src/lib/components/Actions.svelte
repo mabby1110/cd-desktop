@@ -67,6 +67,7 @@
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 8fr 2fr;
+        padding: 1rem;
     }
     .actionButtons {
         grid-area: 2 / 1 / 3 / 2;

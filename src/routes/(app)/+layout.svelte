@@ -2,9 +2,8 @@
   import type { PageData } from "./$types";
   import Link from "$lib/components/Link.svelte";
   import { pb } from "$lib/pocketbase";
-  import ShoppingCart from "$lib/components/ShoppingCart.svelte";
   import ViewTransition from "$lib/components/Navigation.svelte"
-  import Actions from "$lib/components/Actions.svelte";
+  import SphereBackground from "$lib/components/SphereBackground.svelte";
 
   export let data: PageData;
 </script>
@@ -16,7 +15,10 @@
   />
   </svelte:head> -->
   
-  
+
+<div class="background">
+  <SphereBackground/>
+</div>
 <main>
   <ViewTransition />
   <div class="navbar">
@@ -63,11 +65,22 @@
 </main>
 
 <style>
+  .background {
+    background-color: blueviolet;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   main {
     display: flex;
     align-items: stretch;
     flex-direction: column;
-    background-color: var(--secondary-color);
     
     overflow: scroll;
     height: 100vh;

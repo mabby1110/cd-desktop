@@ -19,55 +19,45 @@
     <title>Settings - CS</title>
   </svelte:head>
 
-  <div class="mainContent" style:--mainContent="mainContent">
-    <AccountSettings />
-  </div>
-
-  <div class="metadata" style:--metadata="metadata">
-    <div class="profile">
-      <Profile />
-    </div>
-
-    <div class="security">
-      <Security />
+  <div class="main" style:--mainContent="mainContent">
+    <div class="mainContent">
+      <div class="profile">
+        <Profile />
+      </div>
+      <div class="accountSettings">
+        <AccountSettings />
+      </div>
+      <div class="security">
+        <Security />
+      </div>
     </div>
   </div>
   
+  <div class="metadata" style:--metadata="metadata">
+  </div>
+  <div class="actions" style:--actions="actions">
+  </div>
+
   <style>
-    .mainContent {
-      grid-area: 1 / 5 / -1 / -1;
-      view-transition-name: mainContent;
-      
-      padding: 1rem;
-      border-width: 0.1vh 0 0 0.1vh;
-      border-color: var(--text-color);
+    .main {
+      grid-area: 1 / 2 / -1 / -1;
     }
+      .mainContent {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 3fr 5fr;
+        grid-template-rows: 1fr 1fr;
+      }
     .metadata {
-      grid-area: 1 / 1 / 9 / 5;
-      view-transition-name: metadata;
-      padding: 1rem;
-      border-width: 0.1vh 0.1vh 0 0;
-      border-color: var(--text-color);
-      display: flex;
-      flex-direction: column;
-      gap:1rem;
-    }
-    .globalActions {
-      grid-area: 9 / 1 / -1 / 5;
-      view-transition-name: globalActions;
-
-      border-color: var(--text-color);
-      padding: 2rem;
-      display: flex;
-      align-items: end;
-    }
-    article {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      padding: 1rem;
+      grid-area: 1 / 1 / 5 / 2;
     }
 
+    .actions {
+      grid-area: 5 / 1 / 13 / 2;
+    }
+    .security {
+      grid-area: 2 / 2 / -1 / -1;
+    }
     .profile {
       display: flex;
       flex-direction: column;
