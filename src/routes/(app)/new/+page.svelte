@@ -125,7 +125,6 @@
       variant="primary"
       disabled={title === "" ||
         content === "" ||
-        language === "" ||
         tags.length === 0}
     >
       Post Code Snippet

@@ -32,6 +32,7 @@ body {
   --text-color: rgb(236, 236, 236);
   
   height: 100vh;
+  background-color: black;
 }
 
 ::view-transition-old(root),
