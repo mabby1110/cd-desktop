@@ -3,7 +3,8 @@
   import Link from "$lib/components/Link.svelte";
   import { pb } from "$lib/pocketbase";
   import ViewTransition from "$lib/components/Navigation.svelte"
-  import SphereBackground from "$lib/components/SphereBackground.svelte";
+  // import SphereBackground from "$lib/components/SphereBackground.svelte";
+  import Anaglyph from "$lib/components/Anaglyph.svelte";
 
   export let data: PageData;
 </script>
@@ -17,7 +18,7 @@
   
 
 <div class="background">
-  <SphereBackground/>
+  <Anaglyph/>
 </div>
 
 <main>
@@ -67,7 +68,7 @@
 
 <style>
   .background {
-    background-color: blueviolet;
+    background-color: rgb(0, 0, 0);
     position: absolute;
     top: 0;
     bottom: 0;
