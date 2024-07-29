@@ -99,9 +99,11 @@
     display: flex;
     justify-content: space-between;
     gap: 1rem;
+    padding: 0 1rem;
+    background-color: var(--primary-color);
     border-top: white;
     border-width: 0 0 0.1vw 0;
-
+    color: var(--text-color-bb);
   }
 
   .md-show {

@@ -249,6 +249,7 @@
   border-radius: 8px;
   border: solid 1px var(--tertiary-color);
   padding: 1rem;
+  color: var(--text-color-bb);
 
   transition: grid 0.3s ease; /* Adjust timing as needed */
 }

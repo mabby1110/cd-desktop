@@ -85,6 +85,7 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
+      backdrop-filter: blur(0.3rem);
     }
   
     form {

@@ -22,14 +22,15 @@ body {
   --text-color: rgb(26, 31, 37); */
 
   
-  --primary-color: rgba(21, 21, 22, 0.582);
+  --primary-color: rgba(21, 21, 22, 0.786);
   --secondary-color: rgb(0, 0, 0);
   --tertiary-color: rgb(70, 73, 75);
   --accent-color: rgb(100, 50, 200);
   --destructive-color: rgb(255, 0, 0);
   --complementary-color: rgb(255, 215, 0);
   --triadic-color: rgb(135, 206, 250);
-  --text-color: rgb(236, 236, 236);
+  --text-color-wb: rgb(0, 0, 0);
+  --text-color-bb: rgb(255, 255, 255);
   
   height: 100vh;
   background-color: black;
@@ -73,7 +74,7 @@ body {
     right: 0;
     bottom: 0;
     width: 2px;
-    background-color: white;
+    background-color:var(--text-color-wb);
   }
 
   /* Línea inferior */
@@ -85,7 +86,7 @@ body {
     left: 0;
     right: 0;
     height: 2px;
-    background-color: white;
+    background-color:var(--text-color-wb);
   }
 
 .actions {
@@ -102,7 +103,7 @@ body {
       right: 0;
       bottom: 0;
       width: 2px;
-      background-color: white;
+      background-color:var(--text-color-wb);
     }
 .hljs {
   background: #282c34;
