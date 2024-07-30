@@ -3,10 +3,11 @@
   import Link from "$lib/components/Link.svelte";
   import { pb } from "$lib/pocketbase";
   import ViewTransition from "$lib/components/Navigation.svelte"
-  // import SphereBackground from "$lib/components/SphereBackground.svelte";
   import Anaglyph from "$lib/components/Anaglyph.svelte";
 
   export let data: PageData;
+  let mode = true
+
 </script>
 
 <!-- <svelte:head>
@@ -16,9 +17,8 @@
   />
   </svelte:head> -->
   
-
 <div class="background">
-  <Anaglyph/>
+  <Anaglyph mode={mode}/>
 </div>
 
 <main>
@@ -59,6 +59,7 @@
         </div>
       </Link>
       {/if}
+      <button on:click={()=>{mode=!mode; location.reload();}}>{mode}</button>
     </section>
   </div>
   <div class="cunt">

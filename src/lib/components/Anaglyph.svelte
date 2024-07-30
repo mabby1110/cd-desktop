@@ -4,9 +4,11 @@
     import Stats from 'stats.js';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     import { AnaglyphEffect } from 'three/addons/effects/AnaglyphEffect.js';
+    import { writable } from 'svelte/store';
     
     let container;
-
+    export let mode: boolean;
+    let modeW = writable(mode)
     onMount(() => {
         let camera, scene, renderer, effect, stats, windowHalfX, windowHalfY;
         
@@ -25,8 +27,15 @@
             camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
             camera.position.z = 3;
 
-            const path = '/src/lib/textures/skyboxsun25deg/';
-            const format = '.jpg';
+            let format;
+            let path;
+            if($modeW){
+                format = '.jpg';
+                path = '/src/lib/textures/skyboxsun25deg/';
+            }else {
+                format = '.png';
+                path = '/src/lib/textures/nasaNightSky180deg/';
+            }
             const urls = [
                 path + 'px' + format, path + 'nx' + format,
                 path + 'py' + format, path + 'ny' + format,
