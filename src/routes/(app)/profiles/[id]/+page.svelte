@@ -12,6 +12,23 @@
   <svelte:head>
     <title>{result.user ? result.user.name : "User not found"} - CS</title>
   </svelte:head>
+  <div class="main">
+    <div class="mainContent" style:--mainContent="mainContent">
+      {#if result.posts}
+        {#await result.posts}
+          <article>
+            <h1>Loading Posts</h1>
+          </article>
+        {:then posts}
+          {#each posts as post}
+            <PostComponent authModel={data.authModel} {post} />
+          {:else}
+            <p>No posts found</p>
+          {/each}
+        {/await}
+      {/if}
+    </div>
+  </div>
   
   <div class="metadata" style:--metadata="metadata">
     <header>
@@ -42,29 +59,22 @@
     </header>
   </div>
 
-  <div class="mainContent" style:--mainContent="mainContent">
-    {#if result.posts}
-      {#await result.posts}
-        <article>
-          <h1>Loading Posts</h1>
-        </article>
-      {:then posts}
-        {#each posts as post}
-          <PostComponent authModel={data.authModel} {post} />
-        {:else}
-          <p>No posts found</p>
-        {/each}
-      {/await}
-    {/if}
-  </div>
-
   <div class="actions" style:--actions="actions">
     <Actions authModel={data.authModel}/>
   </div>
 <style>
-.mainContent {
+.main {
+  overflow: scroll;
   grid-area: 3 / 5 / 13 / 13;
 }
+  .mainContent {
+    position: sticky;
+    top: 0;
+    z-index: -1;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, min-max(240px, 1fr));
+  }
 
 .metadata {
   grid-area: 1 / 1 / 3 / 13;

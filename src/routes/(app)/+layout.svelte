@@ -62,7 +62,7 @@
       <button on:click={()=>{mode=!mode; location.reload();}}>{mode}</button>
     </section>
   </div>
-  <div class="cunt">
+  <div class="mainGrid">
     <slot />
   </div>
 </main>
@@ -75,7 +75,7 @@
     bottom: 0;
     z-index: -1;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -86,17 +86,10 @@
     flex-direction: column;
     
     overflow: scroll;
-    height: 100vh;
-  }
-
-  .navbar > a {
-    text-decoration: none;
-    display: grid;
-    place-items: center;
   }
 
   .navbar {
-    position: sticky;
+    height: 5vh;
     display: flex;
     justify-content: space-between;
     gap: 1rem;
@@ -105,6 +98,11 @@
     border-top: white;
     border-width: 0 0 0.1vw 0;
     color: var(--text-color-bb);
+  }
+  .navbar > a {
+    text-decoration: none;
+    display: grid;
+    place-items: center;
   }
 
   .md-show {

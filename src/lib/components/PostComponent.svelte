@@ -226,21 +226,8 @@
 </div>
 
 <style>
-.small {
-  flex: 1 1 33%;
-  min-width: 20rem;
-  max-width: 50%;
-  min-height: 20rem;
-  max-height: 40%;
-}
-.big {
-  flex: 1 1 66%;
-  min-width: 20rem;
-  max-width: 100%;
-  min-height: 20rem;
-}
+
 .postContent {
-  height: 100%;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: minmax(3rem, 2fr) 2fr 8fr 1fr auto 0.5fr;

@@ -2,7 +2,7 @@
   import Actions from "$lib/components/Actions.svelte";
   import { fade, fly, draw } from "svelte/transition";
   import PostComponent from "$lib/components/PostComponent.svelte";
-  import PostFilter from "$lib/components/PostFilter.svelte";
+  import Filter from "$lib/components/Filter.svelte";
   import type { PageData } from "./$types";
     import { writable } from "svelte/store";
 
@@ -20,8 +20,8 @@
   <title>Home - CS</title>
 </svelte:head>
 <div class="main">
+  <Filter on:filter={handleFilter}/>
   <div class="mainContent" style:--mainContent="mainContent">
-    <PostFilter on:filter={handleFilter}/>
     {#if $filteredPosts.length === 0}
       <article><h1>No posts found</h1></article>
     {:else}
@@ -54,15 +54,20 @@
 
 <style>
 .main {
-  grid-area: 1 / 5 / 13 / 13;  
+  overflow: scroll;
+  grid-area: 1 / 5 / 13 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
 }
   .mainContent {
-    overflow: scroll;
-    padding: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: flex-start;
+    position: sticky;
+    top: 0;
+    z-index: -1;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, min-max(240px, 1fr));
   }
 
 .metadata {

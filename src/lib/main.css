@@ -7,21 +7,12 @@
   color: var(--text-color);
   font-family: "Inter", sans-serif;
   margin: 0;
+  box-sizing: border-box;
   scrollbar-width: none; /* For Firefox */
   -ms-overflow-style: none;  /* For Internet Explorer and Edge */
 }
 
 body {
-  /* Light mode */
-  /* --primary-color: rgb(245, 244, 244);
-  --secondary-color: rgb(235, 232, 232);
-  --tertiary-color: rgb(205, 205, 205);
-  --accent-color: rgb(236, 36, 93);
-  --destructive-color: rgb(249, 39, 39);
-  --complementary-color: rgb(36, 93, 236);
-  --text-color: rgb(26, 31, 37); */
-
-  
   --primary-color: rgba(21, 21, 22, 0.786);
   --secondary-color: rgb(0, 0, 0);
   --tertiary-color: rgb(70, 73, 75);
@@ -41,9 +32,10 @@ body {
 ::view-transition-new(root) {
   animation-duration: 0.5s;
 }
-.cunt {
+.mainGrid {
   display: grid;
-  height: 100%;
+  width: 100%;
+  height: 95vh;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(12, 1fr);
   grid-auto-flow: dense;
@@ -53,18 +45,11 @@ body {
   position: relative;
   padding: 0 2rem;
 }
-  .mainContent {
-    overflow: scroll;
-    padding: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: flex-start;
-  }
 
 .metadata {
   position: relative;
-  padding: 1rem;
+  width: 100%;
+  height: 100%;
 }
   /* Línea derecha */
   .metadata::after {

@@ -30,7 +30,8 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        margin-bottom: 20px;
+        position: sticky;
+        top:0
     }
 
     input {
