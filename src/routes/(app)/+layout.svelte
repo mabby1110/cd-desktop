@@ -18,7 +18,7 @@
   </svelte:head> -->
   
 <div class="background">
-  <Anaglyph mode={mode}/>
+  <!-- <Anaglyph mode={mode}/> -->
 </div>
 
 <main>
@@ -52,6 +52,13 @@
         </div>
       </Link>
 
+      <Link href="/search" variant="ghost">
+        <div class="link-content">
+          <iconify-icon icon="material-symbols:search"></iconify-icon>
+          <span> Search </span>
+        </div>
+      </Link>
+
       <Link href="/settings" variant="ghost">
         <div class="link-content">
           <iconify-icon icon="material-symbols:settings"></iconify-icon>
@@ -59,7 +66,6 @@
         </div>
       </Link>
       {/if}
-      <button on:click={()=>{mode=!mode; location.reload();}}>{mode}</button>
     </section>
   </div>
   <div class="mainGrid">

@@ -66,6 +66,10 @@
 .main {
   overflow: scroll;
   grid-area: 3 / 5 / 13 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
 }
   .mainContent {
     position: sticky;
@@ -78,6 +82,7 @@
 
 .metadata {
   grid-area: 1 / 1 / 3 / 13;
+  background-color: var(--primary-color);
 }
 
 .actions {
