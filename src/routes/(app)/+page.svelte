@@ -43,10 +43,10 @@
     <div id="end" class="homeSection">
         <Link href="/search" variant="ghost">
             <div class="link-content">
-              <iconify-icon icon="material-symbols:search"></iconify-icon>
-              <span> Search </span>
+                <iconify-icon icon="material-symbols:search"></iconify-icon>
+                <span> Search </span>
             </div>
-          </Link>
+            </Link>
     </div>
 </AnimatedElement>
 </div>

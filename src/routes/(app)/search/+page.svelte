@@ -68,7 +68,6 @@
   .mainContent {
     position: sticky;
     top: 0;
-    z-index: -1;
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, min-max(240px, 1fr));

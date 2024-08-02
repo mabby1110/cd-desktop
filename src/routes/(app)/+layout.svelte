@@ -78,7 +78,7 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    z-index: -1;
+    z-index: -11;
     width: 100%;
     background-color: rgb(0, 0, 0);
     display: flex;
@@ -90,11 +90,9 @@
     align-items: stretch;
     flex-direction: column;
   }
-
   .navbar {
     position: sticky;
     top: 0;
-    z-index: 9999;
     height: 5vh;
     display: flex;
     justify-content: space-between;
@@ -110,50 +108,40 @@
     display: grid;
     place-items: center;
   }
-
   .md-show {
     display: none;
   }
-
   .md-hide {
     display: block;
   }
-
   .links {
     display: none;
     flex-direction: row;
     gap: 8px;
   }
-
   .link-content {
     display: flex;
     align-items: center;
     gap: 8px;
   }
-
   iconify-icon {
     font-size: 22px;
   }
-
   img {
     width: 22px;
     height: 22px;
     object-fit: cover;
   }
-
   .link-content span {
     font-size: 14px;
   }
-
   .link-content.create {
     justify-content: center;
   }
-
   .link-content.create iconify-icon {
     font-size: 16px;
     color: var(--text-color);
   }
-
   .link-content.create span {
     color: var(--text-color);
   }

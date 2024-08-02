@@ -2,7 +2,7 @@
     import { onDestroy, onMount } from 'svelte';
     import { release } from '$lib/bgAnimation';
 
-    export let threshold = 0.5;
+    export let threshold = 0.5555;
 
     let element;
     let isVisible = false;
@@ -10,13 +10,18 @@
     onMount(() => {
         const observer = new IntersectionObserver(
         ([entry]) => {
+            let prev = entry.target.previousElementSibling
+            let next = entry.target.nextElementSibling
             isVisible = entry.isIntersecting;
-            console.log(entry.target.nextElementSibling, isVisible)
-            // Check if the observed element is the last child
-            if (isVisible && entry.target.nextElementSibling == null) {
-                release.set(true); // Update the rotation value
-            } else if (entry.target.nextElementSibling != null){
-                release.set(false); // Update the rotation value
+
+            console.log(isVisible, next, $release)
+
+            if (isVisible && prev == null) {
+                release.set(1)
+            } else if (isVisible && prev != null && next != null){
+                release.set(2)
+            } else if (isVisible && next == null) {
+                release.set(3)
             }
         },
         { threshold }
