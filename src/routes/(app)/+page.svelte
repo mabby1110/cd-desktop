@@ -43,10 +43,11 @@
 
 <style>
 .home {
-    position: absolute;
+    grid-area: 1 / 1 / -1 / -1;
     z-index: 999;
     width: 100%;
     color: white;
+    background-color: black;
 }
 
 .homeSection {

@@ -75,13 +75,12 @@
 
 <style>
   .background {
-    background-color: rgb(0, 0, 0);
-    position: absolute;
+    position: fixed;
     top: 0;
     bottom: 0;
     z-index: -1;
     width: 100%;
-    height: 100%;
+    background-color: rgb(0, 0, 0);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,8 +89,6 @@
     display: flex;
     align-items: stretch;
     flex-direction: column;
-    
-    overflow: scroll;
   }
 
   .navbar {
