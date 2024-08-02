@@ -35,7 +35,7 @@
           <iconify-icon icon="octicon:home-fill-24"></iconify-icon>
           <span> Home </span>
         </div>
-      </Link>
+      </Link>   
 
       {#if data.authenticated}
       <Link href="/profiles" variant="ghost" align="left">
@@ -92,14 +92,17 @@
   }
 
   .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
     height: 5vh;
     display: flex;
     justify-content: space-between;
     gap: 1rem;
     padding: 0 1rem;
-    background-color: var(--primary-color);
     border-top: white;
     border-width: 0 0 0.1vw 0;
+    background-color: black;
     color: var(--text-color-bb);
   }
   .navbar > a {

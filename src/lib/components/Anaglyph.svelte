@@ -106,8 +106,8 @@
         function render() {
             const timer = 0.0001 * Date.now();
 
-            camera.position.x += (rotation*0.2 - camera.position.x) * 0.05;
-            camera.position.y += (-rotation*0.2 - camera.position.y) * 0.05;
+            camera.position.x += (rotation*0.02 - camera.position.x) * 0.05;
+            camera.position.y += (-rotation*0.02 - camera.position.y) * 0.05;
 
             // for (let i = 0; i < spheres.length; i++) {
             //     const sphere = spheres[i];
