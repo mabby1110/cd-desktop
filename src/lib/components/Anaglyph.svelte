@@ -50,21 +50,26 @@
             light.position.set(0, 1, 0);
             scene.add(light);
 
+            // Cubo de esferas
             const geometry = new THREE.SphereGeometry(0.1, 32, 16);
             const material = new THREE.MeshBasicMaterial({ color: 0xffffff, envMap: textureCube });
 
-            const cubeSize = 10; // Size of the cube
-            const sphereCountPerAxis = Math.cbrt(500); // Number of spheres along each axis
+            const cubeSize = 10; // Tamaño del cubo
+            const sphereCountPerAxis = Math.cbrt(500); // Número de esferas en cada eje
+            const spacing = 0.5; // Espacio deseado entre esferas
+            
+            // Calcular el tamaño total necesario considerando el espacio entre esferas
+            const offset = cubeSize / 4
 
             for (let x = 0; x < sphereCountPerAxis; x++) {
                 for (let y = 0; y < sphereCountPerAxis; y++) {
                     for (let z = 0; z < sphereCountPerAxis; z++) {
                         const mesh = new THREE.Mesh(geometry, material);
 
-                        // Calculate the position of each sphere
-                        mesh.position.x = (x / (sphereCountPerAxis - 1));
-                        mesh.position.y = (y / (sphereCountPerAxis - 1));
-                        mesh.position.z = (z / (sphereCountPerAxis - 1));
+                        // Calcular la posición de cada esfera con el espacio deseado entre ellas
+                        mesh.position.x = x * (geometry.parameters.radius * 2 + spacing) - cubeSize / 2 + offset;
+                        mesh.position.y = y * (geometry.parameters.radius * 2 + spacing) - cubeSize / 2 + offset;
+                        mesh.position.z = z * (geometry.parameters.radius * 2 + spacing) - cubeSize / 2 - offset/2;
 
                         mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
 

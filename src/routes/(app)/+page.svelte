@@ -1,5 +1,6 @@
 <script lang="ts">
     import AnimatedElement from "$lib/components/AnimatedElement.svelte";
+    import Link from "$lib/components/Link.svelte";
     import { onMount } from 'svelte';
     import { release } from '$lib/bgAnimation';
 
@@ -39,8 +40,13 @@
     </div>
 </AnimatedElement>
 <AnimatedElement>
-    <div class="homeSection">
-        end
+    <div id="end" class="homeSection">
+        <Link href="/search" variant="ghost">
+            <div class="link-content">
+              <iconify-icon icon="material-symbols:search"></iconify-icon>
+              <span> Search </span>
+            </div>
+          </Link>
     </div>
 </AnimatedElement>
 </div>
@@ -48,7 +54,6 @@
 <style>
 .home {
     position: absolute;
-    z-index: 999;
     width: 100%;
     color: white;
 }

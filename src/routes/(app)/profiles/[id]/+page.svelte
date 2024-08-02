@@ -3,10 +3,14 @@
     import PostComponent from "$lib/components/PostComponent.svelte";
     import { pb } from "$lib/pocketbase";
     import type { PageData } from "./$types";
+    import { onMount, onDestroy } from "svelte";
+    import { release } from "$lib/bgAnimation";
   
     export let data: PageData;
   
     let { result } = data;
+    onMount(()=>{release.set(true)})
+    onDestroy(()=>{release.set(false)})
   </script>
   
   <svelte:head>

@@ -3,7 +3,9 @@
   import PostComponent from "$lib/components/PostComponent.svelte";
   import Filter from "$lib/components/Filter.svelte";
   import type { PageData } from "./$types";
-    import { writable } from "svelte/store";
+  import { writable } from "svelte/store";
+  import { release } from "$lib/bgAnimation";
+  import { onMount, onDestroy } from "svelte";
 
   export let data: PageData;
   
@@ -14,6 +16,9 @@
     const filtered = data.result.filterPosts(tag, title, user);
     filteredPosts.set(filtered);
   }
+
+  onMount(()=>{release.set(true)})
+  onDestroy(()=>{release.set(false)})
 </script>
 <svelte:head>
   <title>Home - CS</title>

@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from 'svelte';
+    import { onDestroy, onMount } from 'svelte';
     import { release } from '$lib/bgAnimation';
 
     export let threshold = 0.5;
@@ -15,10 +15,8 @@
             // Check if the observed element is the last child
             if (isVisible && entry.target.nextElementSibling == null) {
                 release.set(true); // Update the rotation value
-                console.log($release)
-            } else {
-                release.set(false); // Reset the rotation value when not intersecting
-                console.log($release)
+            } else if (entry.target.nextElementSibling != null){
+                release.set(false); // Update the rotation value
             }
         },
         { threshold }
