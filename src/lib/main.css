@@ -8,8 +8,6 @@
   font-family: "Inter", sans-serif;
   margin: 0;
   box-sizing: border-box;
-  scrollbar-width: none; /* For Firefox */
-  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
 }
 
 body {

@@ -2,13 +2,12 @@
     import { onMount } from 'svelte';
     import * as THREE from 'three';
     import Stats from 'stats.js';
-    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     import { AnaglyphEffect } from 'three/addons/effects/AnaglyphEffect.js';
-    import { writable } from 'svelte/store';
     
     let container;
     export let mode: boolean;
-    let modeW = writable(mode)
+    export let rotation: number = 0; // New prop for rotation
+    
     onMount(() => {
         let camera, scene, renderer, effect, stats, windowHalfX, windowHalfY;
         
@@ -29,7 +28,7 @@
 
             let format;
             let path;
-            if($modeW){
+            if(mode){
                 format = '.jpg';
                 path = '/src/lib/textures/skyboxsun25deg/';
             }else {
@@ -107,14 +106,14 @@
         function render() {
             const timer = 0.0001 * Date.now();
 
-            camera.position.x += (mouseX - camera.position.x) * 0.05;
-            camera.position.y += (-mouseY - camera.position.y) * 0.05;
+            camera.position.x += (rotation - camera.position.x) * 0.05;
+            camera.position.y += (-rotation - camera.position.y) * 0.05;
 
-            for (let i = 0; i < spheres.length; i++) {
-                const sphere = spheres[i];
-                sphere.position.x = 5 * Math.cos(timer + i);
-                sphere.position.y = 5 * Math.sin(timer + i * 1.1);
-            }
+            // for (let i = 0; i < spheres.length; i++) {
+            //     const sphere = spheres[i];
+            //     sphere.position.x = 5 * Math.cos(timer + i);
+            //     sphere.position.y = 5 * Math.sin(timer + i * 1.1);
+            // }
 
             effect.render(scene, camera);
         }
