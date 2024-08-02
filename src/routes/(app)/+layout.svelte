@@ -4,7 +4,7 @@
   import { pb } from "$lib/pocketbase";
   import ViewTransition from "$lib/components/Navigation.svelte"
   import Anaglyph from "$lib/components/Anaglyph.svelte";
-  import { rotation } from '$lib/bgAnimation';
+  import { release } from "$lib/bgAnimation";
 
   export let data: PageData;
 
@@ -18,7 +18,7 @@
   </svelte:head> -->
   
 <div class="background">
-  <Anaglyph mode={true} rotation={$rotation}/>
+  <Anaglyph mode={true} release={$release}/>
 </div>
 
 <main>

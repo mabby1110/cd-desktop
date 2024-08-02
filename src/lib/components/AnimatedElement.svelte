@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import { rotation } from '$lib/bgAnimation';
+    import { release } from '$lib/bgAnimation';
 
     export let threshold = 0.5;
 
@@ -11,13 +11,14 @@
         const observer = new IntersectionObserver(
         ([entry]) => {
             isVisible = entry.isIntersecting;
-
+            console.log(entry.target.nextElementSibling, isVisible)
             // Check if the observed element is the last child
-            if (isVisible && entry.target === element.parentElement.lastElementChild) {
-                rotation.set(45); // Update the rotation value
-                console.log("algo rodasf")
+            if (isVisible && entry.target.nextElementSibling == null) {
+                release.set(true); // Update the rotation value
+                console.log($release)
             } else {
-                rotation.set(0); // Reset the rotation value when not intersecting
+                release.set(false); // Reset the rotation value when not intersecting
+                console.log($release)
             }
         },
         { threshold }
@@ -36,7 +37,6 @@
 <style>
 div {
     color: rgba(255, 255, 255, 0);
-    background-color: black;
     transition: all 0.5s;
 }
 

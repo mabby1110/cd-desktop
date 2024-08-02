@@ -1,18 +1,19 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     import * as THREE from 'three';
     import Stats from 'stats.js';
     import { AnaglyphEffect } from 'three/addons/effects/AnaglyphEffect.js';
     
     let container;
     export let mode: boolean;
-    export let rotation: number = 0; // New prop for rotation
+    export let release: boolean = false; // New prop for rotation
     
+    let camera, scene, renderer, windowHalfX, windowHalfY;
+    const spheres = [];
     onMount(() => {
-        let camera, scene, renderer, effect, stats, windowHalfX, windowHalfY;
+        let effect, stats;
         
         let mouseX = 0, mouseY = 0;
-        const spheres = [];
 
         windowHalfX = window.innerWidth / 2;
         windowHalfY = window.innerHeight / 2;
@@ -52,19 +53,32 @@
             const geometry = new THREE.SphereGeometry(0.1, 32, 16);
             const material = new THREE.MeshBasicMaterial({ color: 0xffffff, envMap: textureCube });
 
-            for (let i = 0; i < 500; i++) {
-                const mesh = new THREE.Mesh(geometry, material);
+            const cubeSize = 10; // Size of the cube
+            const sphereCountPerAxis = Math.cbrt(500); // Number of spheres along each axis
 
-                mesh.position.x = Math.random() * 10 - 5;
-                mesh.position.y = Math.random() * 10 - 5;
-                mesh.position.z = Math.random() * 10 - 5;
+            for (let x = 0; x < sphereCountPerAxis; x++) {
+                for (let y = 0; y < sphereCountPerAxis; y++) {
+                    for (let z = 0; z < sphereCountPerAxis; z++) {
+                        const mesh = new THREE.Mesh(geometry, material);
 
-                mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
+                        // Calculate the position of each sphere
+                        mesh.position.x = (x / (sphereCountPerAxis - 1));
+                        mesh.position.y = (y / (sphereCountPerAxis - 1));
+                        mesh.position.z = (z / (sphereCountPerAxis - 1));
 
-                scene.add(mesh);
-                spheres.push(mesh);
+                        mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 3 + 1;
+
+                        scene.add(mesh);
+                        spheres.push(mesh);
+                    }
+                }
             }
-
+            // render & helpers
+            const gridHelper = new THREE.GridHelper( 400, 40, 0x0000ff, 0x808080 );
+				gridHelper.position.y = 0;
+				gridHelper.position.x = 0;
+				scene.add( gridHelper );
+            
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -104,17 +118,23 @@
         }
 
         function render() {
+            
+            camera.position.x += (mouseX*0.02 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY*0.02 - camera.position.y) * 0.05;
+            
             const timer = 0.0001 * Date.now();
+            if (release) {
+                for (let i = 0; i < spheres.length; i++) {
+                    const sphere = spheres[i];
+                    const targetX = 5 * Math.cos(timer + i);
+                    const targetY = 5 * Math.sin(timer + i * 1.1);
 
-            camera.position.x += (rotation*0.02 - camera.position.x) * 0.05;
-            camera.position.y += (-rotation*0.02 - camera.position.y) * 0.05;
-
-            // for (let i = 0; i < spheres.length; i++) {
-            //     const sphere = spheres[i];
-            //     sphere.position.x = 5 * Math.cos(timer + i);
-            //     sphere.position.y = 5 * Math.sin(timer + i * 1.1);
-            // }
-
+                    // Interpolación hacia la posición deseada
+                    sphere.position.x += (targetX - sphere.position.x) * 0.1; // Ajusta el factor de interpolación según sea necesario
+                    sphere.position.y += (targetY - sphere.position.y) * 0.1;
+                }
+            }
+            
             effect.render(scene, camera);
         }
     });

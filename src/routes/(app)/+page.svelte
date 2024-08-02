@@ -1,20 +1,19 @@
 <script lang="ts">
     import AnimatedElement from "$lib/components/AnimatedElement.svelte";
     import { onMount } from 'svelte';
-    import { rotation } from '$lib/bgAnimation';
+    import { release } from '$lib/bgAnimation';
 
-    onMount(() => {
-        const handleScroll = () => {
-            const scrollPercentage = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-            rotation.set(scrollPercentage * 45); // 45 degrees max rotation
-        };
+    // onMount(() => {
+    //     const handleScroll = () => {
+    //         const scrollPercentage = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    //     };
 
-        window.addEventListener('scroll', handleScroll);
+    //     window.addEventListener('scroll', handleScroll);
 
-        return () => {
-        window.removeEventListener('scroll', handleScroll);
-        };
-    });
+    //     return () => {
+    //     window.removeEventListener('scroll', handleScroll);
+    //     };
+    // });
 </script>
 
 <svelte:head>
@@ -40,7 +39,8 @@
     </div>
 </AnimatedElement>
 <AnimatedElement>
-    <div class="homeSection end">
+    <div class="homeSection">
+        end
     </div>
 </AnimatedElement>
 </div>
