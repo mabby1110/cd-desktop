@@ -9,9 +9,14 @@
 
     let container;
     export let mode: boolean;
-    export let release: boolean = false; // New prop for rotation
+    export let release: number = 0; // New prop for rotation
     
-    let camera, scene, renderer, windowHalfX, windowHalfY;
+    let camera, scene, renderer, windowHalfX, windowHalfY, light;
+    
+    let targetPosition1 = new THREE.Vector3(.5, .5, 0);
+    let targetPosition2 = new THREE.Vector3(0, 0, 0);
+    let targetPosition3 = new THREE.Vector3(0, 5, 2);
+    
     const spheres = [];
     onMount(() => {
         let effect, stats;
@@ -27,73 +32,22 @@
         animate();
 
         function init() {
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
-            camera.position.x = 0;
-            camera.position.y = 0;
-            camera.position.z = -10;
-
-            let format;
-            let path;
-            if(mode){
-                format = '.jpg';
-                path = '/src/lib/textures/skyboxsun25deg/';
-            }else {
-                format = '.png';
-                path = '/src/lib/textures/nasaNightSky180deg/';
-            }
-            const urls = [
-                path + 'px' + format, path + 'nx' + format,
-                path + 'py' + format, path + 'ny' + format,
-                path + 'pz' + format, path + 'nz' + format
-            ];
-            const textureCube = new THREE.CubeTextureLoader().load(urls);
-    
             scene = new THREE.Scene();
-            scene.background = textureCube;
-            
-            const light = new THREE.HemisphereLight(0xffffff, 0x888888, 3);
-            light.position.set(0, 0, 0);
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.x = .5;
+            camera.position.y = .5;
+            camera.position.z = 0;
+
+            // light
+            light = new THREE.PointLight(0x500fbf, 1, 100);
+            light.position.set(1, 1, -3);
             scene.add(light);
-            // titulo
-            const loader = new FontLoader();
-            loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
-                const textGeometry = new TextGeometry('CD', {
-                    font: font,
-                    size: 1,
-                    height: 1,
-                    curveSegments: 12
-                });
-
-                // Center the text geometry
-                textGeometry.computeBoundingBox();
-                const bbox = textGeometry.boundingBox;
-                const textWidth = bbox.max.x - bbox.min.x;
-                const textHeight = bbox.max.y - bbox.min.y;
-
-                textGeometry.translate(-textWidth / 2, -textHeight / 2, 0);
-
-                // Create a material for the text
-                const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-
-                // Create a mesh with the text geometry and material
-                const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-
-                // Position the text at (0, 0, 0)
-                textMesh.position.set(0, 0, -14);
-
-                // Add the text mesh to the scene
-                scene.add(textMesh);
-            });
 
             // Cubo de esferas
             const geometry = new THREE.SphereGeometry(0.1, 32, 16);
-            const material = new THREE.MeshBasicMaterial({ color: 0xffffff, envMap: textureCube });
+            const material = new THREE.MeshPhysicalMaterial({ color: 0xffffff});
 
-            const cubeSize = 10; // Tamaño del cubo
-            const sphereCountPerAxis = Math.cbrt(500); // Número de esferas en cada eje
-            const spacing = 0.5; // Espacio deseado entre esferas
-            
-            // Calcular el tamaño total necesario considerando el espacio entre esferas
+            const sphereCountPerAxis = Math.cbrt(500);
             const offset = 3.5
 
             for (let x = 0; x < sphereCountPerAxis; x++) {
@@ -129,20 +83,43 @@
             const width = window.innerWidth || 2;
             const height = window.innerHeight || 2;
             
-            effect = new AnaglyphEffect(renderer);
-            effect.setSize(width, height);
+            // // skybox
+            // let format;
+            // let path;
+            // if(mode){
+            //     format = '.jpg';
+            //     path = '/src/lib/textures/skyboxsun25deg/';
+            // }else {
+            //     format = '.png';
+            //     path = '/src/lib/textures/nasaNightSky180deg/';
+            // }
+            // const urls = [
+            //     path + 'px' + format, path + 'nx' + format,
+            //     path + 'py' + format, path + 'ny' + format,
+            //     path + 'pz' + format, path + 'nz' + format
+            // ];
+            // const textureCube = new THREE.CubeTextureLoader().load(urls);
+    
+            // scene.background = textureCube;
+            
+            // const light = new THREE.HemisphereLight(0xffffff, 0x888888, 3);
+            // light.position.set(0, 0, 0);
+            // scene.add(light);
+
+            // effect = new AnaglyphEffect(renderer);
+            // effect.setSize(width, height);
             
             stats = new Stats();
             container.appendChild(stats.dom);
             
-            // // Asumiendo que ya tienes una instancia de cámara y escena configuradas
+            // Asumiendo que ya tienes una instancia de cámara y escena configuradas
             // const controls = new OrbitControls(camera, renderer.domElement);
             // controls.enableDamping = true; // Habilita el amortiguamiento
             // controls.dampingFactor = 0.25; // Factor de amortiguamiento
             // controls.enableZoom = true;   // Permite hacer zoom
             // controls.enablePan = true;    // Permite mover la vista lateralmente
             // controls.enableRotate = true; // Permite rotar la vista
-            window.addEventListener('resize', onWindowResize);
+            // window.addEventListener('resize', onWindowResize);
         }
 
         function onWindowResize() {
@@ -160,23 +137,32 @@
             mouseY = (event.clientY - windowHalfY) / 100;
         }
 
+        function updateLightPosition() {
+            const radius = 1; // distance from the camera
+            const angle = performance.now() / 2000; // adjust speed of rotation
+
+                light.position.set(
+                    camera.position.x + radius * Math.cos(angle),
+                    camera.position.y + radius * Math.sin(angle),
+                    camera.position.z
+                );
+            };
+
         function animate() {
             requestAnimationFrame(animate);
+            updateLightPosition();
             render();
             stats.update();
         }
 
         function render() {
             const timer = 0.0001 * Date.now();
-            let targetPosition1 = new THREE.Vector3(0, 0, 10);
-            let targetPosition2 = new THREE.Vector3(4, 4, 10);
-            
             if (release == 1){
                 camera.position.lerp(targetPosition1, 0.01);
             } else if (release == 2) {
                 camera.position.lerp(targetPosition2, 0.01);
-                camera.position.lerp(targetPosition2, 0.01);
             } else if (release == 3) {
+                camera.position.lerp(targetPosition3, 0.01);
                 for (let i = 0; i < spheres.length; i++) {
                     const sphere = spheres[i];
                     const targetX = 5 * Math.cos(timer + i);
@@ -188,7 +174,7 @@
                 }
             }
             
-            effect.render(scene, camera);
+            renderer.render(scene, camera);
         }
     });
 </script>
