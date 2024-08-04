@@ -32,12 +32,6 @@
     imgIndex = (imgIndex + 1) % post.media.length; // Cycle through the images
   }
 
-  function expand() {
-    if (event.target.classList.contains('postContent') || event.target.classList.contains('expand')) {
-      expandPost = false==expandPost
-    }
-  }
-
   cartItems.subscribe((newCartValue) => {
     cart = newCartValue
     cartItemIndex = cart.findIndex((item) => { return item.id === post.id })
@@ -60,7 +54,7 @@
   class="postContent"
   class:small={!expandPost}
   class:big={expandPost}
-  on:click={expand}
+  on:click  tabindex="-1"
   >
   <section class="userActions">
     <a href="/profiles/{post.user.id}" class="account">
@@ -228,13 +222,13 @@
 <style>
 
 .postContent {
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr;
   grid-template-rows: minmax(3rem, 2fr) 2fr 8fr 1fr auto 0.5fr;
   background-color: var(--primary-color);
   backdrop-filter: blur(0.3rem);
-  border-radius: 8px;
-  border: solid 1px var(--tertiary-color);
+  border-radius: 5%;
+  box-shadow: 10px 10px 10px;
   padding: 1rem;
   color: var(--text-color-bb);
 
@@ -271,16 +265,6 @@ header {
 }
 .comments {
   grid-area: 5 / 1 / 6  / 2;
-}
-.expand {
-  grid-area: 6 / 1 / 7  / 2;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.expand p{
-  pointer-events: none;
 }
 
 .mediaImg {
