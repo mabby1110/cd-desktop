@@ -76,8 +76,8 @@
 
 <style>
   .logo {
-    width: 5rem;
-    height: 5rem;
+    width: 10vh;
+    height: 10vh;
   }
   .background {
     position: fixed;
@@ -95,15 +95,21 @@
     align-items: stretch;
     flex-direction: column;
   }
+  main .mainGrid {
+    position: absolute;
+    top:10vh;
+  }
   .navbar {
-    position: sticky;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
     top: 0;
-    height: auto;
+    height: 10vh;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 0 1rem;
+    padding: 0 5vw;
     border-top: white;
     border-width: 0 0 0.1vw 0;
     background-color: black;
