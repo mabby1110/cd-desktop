@@ -18,7 +18,8 @@ body {
   --primary-color: rgba(21, 21, 22, 0.786);
   --secondary-color: rgb(0, 0, 0);
   --tertiary-color: rgb(70, 73, 75);
-  --accent-color: rgb(100, 50, 200);
+  --accent-color: rgb(80, 15, 191);
+  --accent-bg: rgb(27, 6, 63);
   --destructive-color: rgb(255, 0, 0);
   --complementary-color: rgb(255, 215, 0);
   --triadic-color: rgb(135, 206, 250);

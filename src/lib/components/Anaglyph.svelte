@@ -27,6 +27,7 @@
         windowHalfY = window.innerHeight / 2;
 
         document.addEventListener('mousemove', onDocumentMouseMove);
+        window.addEventListener('resize', onWindowResize);
 
         init();
         animate();
@@ -119,7 +120,6 @@
             // controls.enableZoom = true;   // Permite hacer zoom
             // controls.enablePan = true;    // Permite mover la vista lateralmente
             // controls.enableRotate = true; // Permite rotar la vista
-            // window.addEventListener('resize', onWindowResize);
         }
 
         function onWindowResize() {

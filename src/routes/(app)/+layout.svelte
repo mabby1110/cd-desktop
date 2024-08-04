@@ -5,6 +5,8 @@
   import ViewTransition from "$lib/components/Navigation.svelte"
   import Anaglyph from "$lib/components/Anaglyph.svelte";
   import { release } from "$lib/bgAnimation";
+  import logo from "$lib/images/C de comercios LOGO.svg"
+
 
   export let data: PageData;
 
@@ -25,8 +27,7 @@
   <ViewTransition />
   <div class="navbar">
     <a href="/">
-      <h1 class="md-show">Demo co</h1>
-      <h1 class="md-hide">CS</h1>
+      <img src={logo} alt="logo c de comercio" class="logo">
     </a>
 
     <section class="links">
@@ -74,6 +75,10 @@
 </main>
 
 <style>
+  .logo {
+    width: 5rem;
+    height: 5rem;
+  }
   .background {
     position: fixed;
     top: 0;
@@ -93,8 +98,9 @@
   .navbar {
     position: sticky;
     top: 0;
-    height: 5vh;
+    height: auto;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     gap: 1rem;
     padding: 0 1rem;
