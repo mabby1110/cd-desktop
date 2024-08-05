@@ -39,7 +39,7 @@ body {
 .mainGrid {
   display: grid;
   width: 100%;
-  height: 95vh;
+  height: 90%;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(12, 1fr);
   grid-auto-flow: dense;
