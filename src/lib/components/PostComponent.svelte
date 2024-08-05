@@ -70,7 +70,7 @@
     <b>${post.price}</b>
     {#if post.id}
 
-      <button class="flex items-center" on:click={()=>{removeFromCart(post);event.stopPropagation();}}>
+      <button class="flex items-center" on:click={()=>{removeFromCart(post.id);event.stopPropagation();}}>
         <iconify-icon icon="material-symbols:remove" width="1rem" height="1rem"></iconify-icon>
       </button>
 

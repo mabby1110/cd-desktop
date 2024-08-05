@@ -2,6 +2,7 @@
     import Link from "./Link.svelte";
     import type { User } from "./$types";
     import ShoppingCart from "./ShoppingCart.svelte";
+    import ShoppingItem from "./ShoppingItem.svelte";
 
     
     export let authModel: User | undefined;
@@ -24,7 +25,7 @@
                 <div class="sidebar">
                     <br>
                     {#each cart as item}
-                        <p>{item.title} - {item.quantity}</p>
+                        <ShoppingItem post={item}/>
                     {/each}
                 </div>
             {:else}
@@ -84,6 +85,9 @@
         height: 100%;
         grid-area: 1 / 1 / 2 / 2;
         overflow: scroll;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
     .newPost {
         height: 100%;
