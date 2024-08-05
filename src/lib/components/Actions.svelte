@@ -3,18 +3,32 @@
     import type { User } from "./$types";
     import ShoppingCart from "./ShoppingCart.svelte";
     import ShoppingItem from "./ShoppingItem.svelte";
+    import { get } from "svelte/store";
+    import { cartItems } from "../../shoppingCart";
 
     
     export let authModel: User | undefined;
     let view = "seleccione una accion"
-
-    import { get } from 'svelte/store';
-
-    import { cartItems } from '../../shoppingCart';
     let cart = get(cartItems);
     cartItems.subscribe((newCartValue) => {
         cart = newCartValue
     })
+
+    async function checkout() {
+        await fetch("../api/stripeCheckout", {
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(
+                { items: get(cartItems) }
+            )
+        }).then((data)=>{
+            return data.json()
+        }).then((data)=>{
+            window.location.replace(data.url);
+        })
+    }
 </script>
 
 <div class="actionContainer">
@@ -28,6 +42,7 @@
                         <ShoppingItem post={item}/>
                     {/each}
                 </div>
+                <button on:click={()=>checkout()}>checkout</button>
             {:else}
                 Vacio
             {/if}
