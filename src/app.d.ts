@@ -16,7 +16,7 @@ declare global {
 }
 
 declare class CartItem {
-	id: string
+	post: Post
 	quantity: number
 }
 

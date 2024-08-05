@@ -24,7 +24,7 @@
                 <div class="sidebar">
                     <br>
                     {#each cart as item}
-                        <p>{item.id} - {item.quantity}</p>
+                        <p>{item.title} - {item.quantity}</p>
                     {/each}
                 </div>
             {:else}
@@ -86,11 +86,6 @@
         overflow: scroll;
     }
     .newPost {
-        height: 100%;
-        display: flex;
-        align-items: center;
-    }
-    .shoppingCart {
         height: 100%;
         display: flex;
         align-items: center;

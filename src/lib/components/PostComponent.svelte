@@ -69,16 +69,19 @@
     <a href="/posts/{post.id}"><h1>{post.title}</h1></a>
     <b>${post.price}</b>
     {#if post.id}
-      <button class="flex items-center" on:click={()=>{removeFromCart(post.id);event.stopPropagation();}}>
+
+      <button class="flex items-center" on:click={()=>{removeFromCart(post);event.stopPropagation();}}>
         <iconify-icon icon="material-symbols:remove" width="1rem" height="1rem"></iconify-icon>
       </button>
+
       {#if cartProduct}
         <p>{cartProduct.quantity}</p>
       {/if}
 
-      <button class="flex items-center" on:click={()=>{addToCart(post.id);event.stopPropagation();}}>
+      <button class="flex items-center" on:click={()=>{addToCart(post);event.stopPropagation();}}>
         <iconify-icon icon="material-symbols:add" width="1rem" height="1rem"></iconify-icon>
       </button>
+
     {/if}
   </header>
 
