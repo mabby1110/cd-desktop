@@ -42,7 +42,7 @@
         <div class="newPost">
         {#if authModel}
             <Link href="/new" variant="primary" size="large">
-            <iconify-icon icon="mingcute:add-fill"></iconify-icon>
+                +
             </Link>
         {:else}
             <Link href="/auth" variant="primary" size="large">
@@ -62,6 +62,11 @@
 </div>
 
 <style>
+    * {
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
     .actionContainer {
         height: 100%;
         display: grid;
@@ -79,5 +84,15 @@
         height: 100%;
         grid-area: 1 / 1 / 2 / 2;
         overflow: scroll;
+    }
+    .newPost {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .shoppingCart {
+        height: 100%;
+        display: flex;
+        align-items: center;
     }
 </style>
