@@ -64,41 +64,33 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="postContent {expanded?'card-big':''}"
-  on:click={handleClick}>
-  <header class="postTitle">
-    <a href="/posts/{post.id}" class="account"><h1>{post.title}</h1></a>
+<div class="postContent {expanded?'card-big':''}" on:click={handleClick}>
+  <header class="{expanded?'postTitle expanded':'postTitle'}">
+    <a href="/posts/{post.id}"><h1>{post.title}</h1></a>
     <b>${post.price}</b>
-    <div class="addToCart">
-      {#if post.id}
-        <!-- borrar post -->
-        <button 
-          on:click={()=>removeFromCart(post.id)}
-          class="flex items-center"
-        >
-          <iconify-icon icon="material-symbols:remove" width="1rem" height="1rem"></iconify-icon>
-        </button>
-  
-        {#if cartProduct}
-          <p>{cartProduct.quantity}</p>
-        {/if}
-  
-        <button 
-          on:click={()=>addToCart(post.id)}
-          class="flex items-center"
-        >
-          <iconify-icon icon="material-symbols:add" width="1rem" height="1rem"></iconify-icon>
-        </button>
+    {#if post.id}
+      <button class="flex items-center" on:click={()=>{removeFromCart(post.id);event.stopPropagation();}}>
+        <iconify-icon icon="material-symbols:remove" width="1rem" height="1rem"></iconify-icon>
+      </button>
+      {#if cartProduct}
+        <p>{cartProduct.quantity}</p>
       {/if}
-    </div>
+
+      <button class="flex items-center" on:click={()=>{addToCart(post.id);event.stopPropagation();}}>
+        <iconify-icon icon="material-symbols:add" width="1rem" height="1rem"></iconify-icon>
+      </button>
+    {/if}
   </header>
-  {#if expanded}
-    <pre>
-      <p bind:this={contentRef}>{post.content}</p>
-    </pre>
-  {/if}
+
+  <div class="postPre">
+    {#if expanded}
+      <pre>
+        <p bind:this={contentRef}>{post.content}</p>
+      </pre>
+    {/if}
+  </div>
   
-  <section class="postMedia">
+  <section class="{expanded?'postMedia expanded':'postMedia'}">
     {#if $pb && post.media} 
       <!-- {#each post.media as file} -->
         <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -237,7 +229,9 @@
 </div>
 
 <style>
-
+*::-webkit-scrollbar {
+  display: none;  /* Para Chrome, Safari y Opera */
+}
 .postContent {
   width: 100%;
   color: var(--text-color-bb);
@@ -246,52 +240,64 @@
   border-radius: 5%;
   box-shadow: 10px 10px 10px black;
   display: grid;
-  grid-template-columns: repeat(6, minmax(1rem, 1fr));
+  grid-template-columns:1fr;
   grid-template-rows: repeat(6, minmax(1rem, 1fr));
-  
-  transition: grid 0.3s ease; /* Adjust timing as needed */
 }
+
 .postTitle {
-  grid-area: 1 / 1 / 2 / -1;
+  grid-area: 6 / 1 / 5 / -1;
+  background-color: var(--primary-color);
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  z-index: 3;
+  transition: grid 0.5s;
+}
+.postTitle.expanded {
+  grid-area: 5 / 1 / 6 / -1;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   z-index: 3;
 }
 .postMedia {
-  grid-area: 1 / 1 / 5 / -1;
+  grid-area: 1 / 1 / 6 / -1;
+  transition: all 0.5s;
+}
+.postMedia.expanded {
+  grid-area: 1 / 1 / -2 / -1;
+}
+.postPre {
+  grid-area: 7 / 1 / 8 / -1;
+  overflow: scroll;
 }
 .postTags {
-  grid-area: 5 / 1 / 6 / -1;
+  grid-area: 6 / 1 / 7 / -1;
   align-items: center;
   display: flex;
   overflow: scroll;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  padding: 0.5rem 0;
 }
 .postComments {
   display: none;
 }
 .postActions {
-  grid-area: 6 / 1 / 7  / -1;
+  grid-area: 1 / 1 / 2  / -1;
   display: flex;
+  height: 3rem;
+  justify-content: space-between;
 }
 .mediaImg {
   width: 100%;
   height: 100%;
   object-fit:cover;
 }
-
 pre {
-  flex: 1 1 100%;
-  tab-size: 4;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  max-height: 60vh;
+  padding: 0 1rem;
 }
-
 pre p {
-  padding: 0.6rem;
+  line-height: 1.2rem;
   text-wrap: wrap;
 }
 
@@ -302,9 +308,15 @@ h1 {
 iconify-icon {
   font-size: 20px;
 }
-
+.postTitle button {
+  justify-content:center;
+  width: 2rem;
+  height: 100%;
+}
 .account {
-  flex: 1 1 50%;
+  background-color: var(--primary-color);
+  border-radius: 0 0 1rem  0;
+  padding-right: 1rem;
   display: flex;
   justify-content:baseline;
   align-items: center;
@@ -317,6 +329,7 @@ iconify-icon {
 .interactions {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 8px;
 }
 
@@ -329,9 +342,9 @@ iconify-icon {
 }
 
 .profileImg {
-  width: 2.5rem;
+  width: 3rem;
   height: 100%;
-  border-radius: 10%;
+  border-radius: 0 0 10% 0;
   object-fit:cover;
 }
 
