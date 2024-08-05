@@ -72,7 +72,7 @@
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     grid-auto-flow: dense;
-    grid-auto-rows: 240px;
+    grid-auto-rows: 20rem;
   }
 
 .metadata {

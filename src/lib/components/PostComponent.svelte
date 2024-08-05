@@ -82,13 +82,13 @@
     {/if}
   </header>
 
+  {#if expanded}
   <div class="postPre">
-    {#if expanded}
       <pre>
         <p bind:this={contentRef}>{post.content}</p>
       </pre>
-    {/if}
-  </div>
+    </div>
+  {/if}
   
   <section class="{expanded?'postMedia expanded':'postMedia'}">
     {#if $pb && post.media} 
@@ -98,8 +98,8 @@
           src={$pb.getFileUrl(post,post.media[imgIndex])}
           alt={post.media[0].name || 'Post media'}
           class="mediaImg"
-          on:click={nextImage}
         />
+        <button class="nextImg" on:click={nextImage}>></button>
       <!-- {/each} -->
     {/if}
   </section>
@@ -241,7 +241,7 @@
   box-shadow: 10px 10px 10px black;
   display: grid;
   grid-template-columns:1fr;
-  grid-template-rows: repeat(6, minmax(1rem, 1fr));
+  grid-template-rows: repeat(5, minmax(1rem, 1fr));
 }
 
 .postTitle {
@@ -251,7 +251,6 @@
   align-items: center;
   justify-content: space-between;
   z-index: 3;
-  transition: grid 0.5s;
 }
 .postTitle.expanded {
   grid-area: 5 / 1 / 6 / -1;
@@ -263,21 +262,25 @@
 }
 .postMedia {
   grid-area: 1 / 1 / 6 / -1;
-  transition: all 0.5s;
+  position: relative;
+  z-index: -1;
 }
 .postMedia.expanded {
   grid-area: 1 / 1 / -2 / -1;
+  position: relative;
 }
 .postPre {
   grid-area: 7 / 1 / 8 / -1;
   overflow: scroll;
+  height: 15rem;
+  padding: 0 1rem;
 }
 .postTags {
   grid-area: 6 / 1 / 7 / -1;
   align-items: center;
   display: flex;
   overflow: scroll;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0 0.5rem 1rem;
 }
 .postComments {
   display: none;
@@ -293,9 +296,7 @@
   height: 100%;
   object-fit:cover;
 }
-pre {
-  padding: 0 1rem;
-}
+
 pre p {
   line-height: 1.2rem;
   text-wrap: wrap;
@@ -351,7 +352,11 @@ iconify-icon {
 .account iconify-icon {
   font-size: 32px;
 }
-
+.nextImg {
+  position: absolute;top:40%;right:0;width:2rem;height:4rem;
+}.nextImg:hover {
+  background-color: var(--primary-color);
+}
 .tag {
   padding: 5px 10px;
   background-color: var(--secondary-color);

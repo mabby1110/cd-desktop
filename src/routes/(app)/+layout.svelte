@@ -5,7 +5,7 @@
   import ViewTransition from "$lib/components/Navigation.svelte"
   import Anaglyph from "$lib/components/Anaglyph.svelte";
   import { release } from "$lib/bgAnimation";
-  import logo from "$lib/images/C de comercios LOGO.svg"
+  import logo from "$lib/images/C DE COMERCIO LOGO.svg"
 
 
   export let data: PageData;

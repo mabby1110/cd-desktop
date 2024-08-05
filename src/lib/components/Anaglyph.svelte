@@ -40,7 +40,7 @@
             camera.position.z = 0;
 
             // light
-            light = new THREE.PointLight(0x500fbf, 1, 100);
+            light = new THREE.PointLight(0x500fbf, 6, 100);
             light.position.set(1, 1, -3);
             scene.add(light);
 

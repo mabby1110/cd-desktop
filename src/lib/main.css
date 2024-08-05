@@ -64,7 +64,7 @@ body {
     right: 0;
     bottom: 0;
     width: 2px;
-    background-color:var(--text-color-wb);
+    background-color:var(--text-color-bb);
   }
 
   /* Línea inferior */
@@ -76,7 +76,7 @@ body {
     left: 0;
     right: 0;
     height: 2px;
-    background-color:var(--text-color-wb);
+    background-color:var(--text-color-bb);
   }
 
 .actions {
@@ -93,7 +93,7 @@ body {
       right: 0;
       bottom: 0;
       width: 2px;
-      background-color:var(--text-color-wb);
+      background-color:var(--text-color-bb);
     }
 .hljs {
   background: #282c34;
