@@ -25,11 +25,25 @@
   let cartProduct = cart[cartItemIndex]
 
   // logica expandir post
-  let expandPost = false
-  let imgIndex = 0
+  let moreOptions = false
 
+  // logica carrusel imagenes
+  let imgIndex = 0
   function nextImage() {
+    event.stopPropagation();
     imgIndex = (imgIndex + 1) % post.media.length; // Cycle through the images
+  }
+  
+  // logica expandir
+  let expanded: boolean = false;
+  function handleClick(){
+    expanded=expanded?false:true;
+    console.log("expanded", expanded)
+  }
+
+  function handleOptions() {
+    event.stopPropagation();
+    moreOptions = moreOptions?false:true;
   }
 
   cartItems.subscribe((newCartValue) => {
@@ -50,74 +64,13 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div
-  class="postContent"
-  class:small={!expandPost}
-  class:big={expandPost}
-  on:click  tabindex="-1"
-  >
-  <section class="userActions">
-    <a href="/profiles/{post.user.id}" class="account">
-      {#if $pb && post.user.photo}
-        <img
-          src={$pb.getFileUrl(post.user, post.user.photo)}
-          alt={post.user.name}
-          class="profileImg"
-        />
-      {:else}
-        <iconify-icon icon="ic:round-account-circle"></iconify-icon>
-      {/if}
-      <p>{post.user.name}</p>
-    </a>
-  
-    <div class="interactions">
-      {#if authModel}
-        <form
-          action="/posts/{post.id}?/toggleLiked&redirect={$page.url.pathname}"
-          method="post"
-          use:enhance={() => {
-            if (post && authModel) {
-              if (post.likes.includes(authModel.id)) {
-                let { id } = authModel;
-                post.likes = post.likes.filter((user) => user !== id);
-              } else {
-                post.likes = [...post.likes, authModel.id];
-              }
-            }
-  
-            return async ({ update }) => {
-              await update({ invalidateAll: true, reset: true });
-            };
-          }}
-        >
-          <Button size="icon" variant="ghost">
-            {#key post.likes}
-              <iconify-icon
-                in:fade={{ duration: 200 }}
-                icon="mdi:heart{post.likes.includes(authModel.id)
-                  ? ''
-                  : '-outline'}"
-                class:liked={post.likes.includes(authModel.id)}
-              ></iconify-icon>
-            {/key}
-          </Button>
-        </form>
-      {/if}
-      {#if authModel && post.user.id === authModel.id}
-        <form action="/posts/{post.id}?/deletePost" method="post">
-          <Button size="icon" variant="destructive">
-            <iconify-icon icon="ph:trash"></iconify-icon>
-          </Button>
-        </form>
-      {/if}
-    </div>
-  </section>
-  
-  <header>
+<div class="postContent {expanded?'card-big':''}"
+  on:click={handleClick}>
+  <header class="postTitle">
     <a href="/posts/{post.id}" class="account"><h1>{post.title}</h1></a>
     <b>${post.price}</b>
     <div class="addToCart">
-      {#if post.id && expandPost}
+      {#if post.id}
         <!-- borrar post -->
         <button 
           on:click={()=>removeFromCart(post.id)}
@@ -138,14 +91,14 @@
         </button>
       {/if}
     </div>
-    {#if expandPost}
+  </header>
+  {#if expanded}
     <pre>
       <p bind:this={contentRef}>{post.content}</p>
     </pre>
-    {/if}
-  </header>
+  {/if}
   
-  <section class="media">
+  <section class="postMedia">
     {#if $pb && post.media} 
       <!-- {#each post.media as file} -->
         <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -159,7 +112,7 @@
     {/if}
   </section>
 
-  <section class="tags">
+  <section class="postTags">
     {#each post.tags as tag}
       <div class="tag">
         <pre>{tag}</pre>
@@ -167,8 +120,8 @@
     {/each}
   </section>
 
-  <section class="comments">
-  {#if $pb && post.expand.comments && expandPost}
+  <section class="postComments">
+  {#if $pb && post.expand.comments}
     <div class="comments-section">
       <h3 class="comments-title">Comments</h3>
       {#each post.expand.comments as comment}
@@ -216,57 +169,112 @@
   {/if}
   </section>
 
-  <div class="expand"><p>...</p></div>
+  <section class="postActions">
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <a class="account">
+      {#if $pb && post.user.photo}
+        <img
+          src={$pb.getFileUrl(post.user, post.user.photo)}
+          alt={post.user.name}
+          class="profileImg"
+        />
+      {:else}
+        <iconify-icon icon="ic:round-account-circle"></iconify-icon>
+      {/if}
+      <a href="/profiles/{post.user.id}" on:click={(event)=>{event.stopPropagation()}}>{post.user.name}</a>
+    </a>
+  
+    <div class="interactions">
+      {#if authModel}
+        <form
+          action="/posts/{post.id}?/toggleLiked&redirect={$page.url.pathname}"
+          method="post"
+          use:enhance={() => {
+            if (post && authModel) {
+              if (post.likes.includes(authModel.id)) {
+                let { id } = authModel;
+                post.likes = post.likes.filter((user) => user !== id);
+              } else {
+                post.likes = [...post.likes, authModel.id];
+              }
+            }
+  
+            return async ({ update }) => {
+              await update({ invalidateAll: true, reset: true });
+            };
+          }}
+        >
+          <Button size="icon" variant="ghost" on:click={(event)=>{event.stopPropagation();}}>
+            {#key post.likes}
+              <iconify-icon
+                in:fade={{ duration: 200 }}
+                icon="mdi:heart{post.likes.includes(authModel.id)
+                  ? ''
+                  : '-outline'}"
+                class:liked={post.likes.includes(authModel.id)}
+              ></iconify-icon>
+            {/key}
+          </Button>
+        </form>
+      {/if}
+      {#if moreOptions}
+        <div>
+          {#if authModel && post.user.id === authModel.id}
+            <form action="/posts/{post.id}?/deletePost" method="post">
+              <Button size="icon" variant="destructive">
+                <iconify-icon icon="ph:trash"></iconify-icon>
+              </Button>
+            </form>
+          {/if}
+        </div>
+        <button>mas detalles</button>
+      {/if}
+      <button on:click={handleOptions}>
+        <iconify-icon icon="mi:options-vertical" width="2rem" height="2rem"  style="color: white"></iconify-icon>
+      </button>
+    </div>
+  </section>
 </div>
 
 <style>
 
 .postContent {
   width: 100%;
-  display: grid;
-  grid-template-rows: minmax(3rem, 2fr) 2fr 8fr 1fr auto 0.5fr;
+  color: var(--text-color-bb);
   background-color: var(--primary-color);
   backdrop-filter: blur(0.3rem);
   border-radius: 5%;
-  box-shadow: 10px 10px 10px;
-  padding: 1rem;
-  color: var(--text-color-bb);
-
+  box-shadow: 10px 10px 10px black;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(1rem, 1fr));
+  grid-template-rows: repeat(6, minmax(1rem, 1fr));
+  
   transition: grid 0.3s ease; /* Adjust timing as needed */
 }
-.userActions {
-  grid-area: 1 / 1 / 2  / 2;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 4px;
-}
-header {
-  grid-area: 2 / 1 / 3  / 2;
+.postTitle {
+  grid-area: 1 / 1 / 2 / -1;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  z-index: 3;
 }
-.media {
-  grid-area: 3 / 1 / 4  / 2;
-  justify-self: center;
-  background-color: #065fd4;
-  display: flex;
-  width: 80%;
-  height: 100%;
-  overflow: hidden;
+.postMedia {
+  grid-area: 1 / 1 / 5 / -1;
 }
-.tags {
-  grid-area: 4 / 1 / 5  / 2;
+.postTags {
+  grid-area: 5 / 1 / 6 / -1;
+  align-items: center;
   display: flex;
-  justify-content: baseline;
-  gap: 8px;
   overflow: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
-.comments {
-  grid-area: 5 / 1 / 6  / 2;
+.postComments {
+  display: none;
 }
-
+.postActions {
+  grid-area: 6 / 1 / 7  / -1;
+  display: flex;
+}
 .mediaImg {
   width: 100%;
   height: 100%;
@@ -321,10 +329,10 @@ iconify-icon {
 }
 
 .profileImg {
-  width: 32px;
-  height: 32px;
-  border-radius: 100px;
-  object-fit: cover;
+  width: 2.5rem;
+  height: 100%;
+  border-radius: 10%;
+  object-fit:cover;
 }
 
 .account iconify-icon {
@@ -424,5 +432,8 @@ iconify-icon {
 .comment-submit {
   margin-top: 8px;
   float: right;
+}
+.card-big {
+  grid-row: span 2 / auto;
 }
 </style>

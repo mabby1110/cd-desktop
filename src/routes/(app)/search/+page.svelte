@@ -16,15 +16,6 @@
     const filtered = data.result.filterPosts(tag, title, user);
     filteredPosts.set(filtered);
   }
-  function handleClick(event) {
-    const target = event.target;
-    console.log(":)", target.classList.contains("card-big"))
-    if (target.classList.contains("card-big")) {
-      target.classList.remove("card-big");
-    } else {
-      target.classList.add("card-big");
-    }
-  }
 
   onMount(()=>{release.set(true)})
   onDestroy(()=>{release.set(false)})
@@ -42,7 +33,6 @@
         <PostComponent
           authModel={data.authModel}
           {post}
-          on:click={handleClick}
         />
       {/each}
     {/if}

@@ -32,10 +32,6 @@ body {
   background-color: black;
   color: var(--text-color-bb);
 }
-
-.card-big {
-  grid-row: span 2 / auto;
-}
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.5s;
