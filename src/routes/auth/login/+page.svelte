@@ -26,10 +26,10 @@
     }}
   >
     <div class="heading">
-      <h1>Log into an Account</h1>
+      <h1>Inicia Sesión</h1>
 
       <p>
-        Log into an account and get back to sharing your favorite code snippets!
+        Inicia Sesión para encontrar lo que buscas, en tu ciudad!
       </p>
     </div>
 
@@ -40,7 +40,7 @@
           type="email"
           name="email"
           bind:value={email}
-          placeholder="Enter your e-mail"
+          placeholder="Ingresa tu email"
         />
       </div>
 
@@ -50,7 +50,7 @@
           type="password"
           name="password"
           bind:value={password}
-          placeholder="Enter your password"
+          placeholder="Ingresa tu contraseña"
         />
       </div>
 
@@ -64,18 +64,17 @@
       size="large"
       disabled={email.length === 0 || password.length < 8}
     >
-      Log in!
+      Log in
     </Button>
   </form>
 
   <div class="link">
-    <p>Don't have an account?</p>
+    <p>Aún no tienes cuenta?!</p>
 
-    <Link href="/auth/create-account">Create an Account</Link>
+    <Link href="/auth/create-account">Crear Cuenta</Link>
 
     <p class="terms">
-      By logging into your account you accept CodeShare's privacy policy and
-      terms of service.
+      Al hacer inicio de sesión aceptas los terminos y condiciones de C de Comercio asi como su aviso de privacidad.
     </p>
   </div>
 </section>
