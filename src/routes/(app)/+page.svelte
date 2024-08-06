@@ -56,18 +56,53 @@
 </AnimatedElement>
 
 <AnimatedElement>
-    <section>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod consectetur, deserunt, cum in nostrum cupiditate mollitia praesentium eius magnam esse quam nobis voluptas aspernatur voluptates alias enim. Adipisci necessitatibus, sit quae aliquid aliquam, fuga, iure quo provident ratione veritatis ea reprehenderit ipsam eius? Harum nemo molestiae recusandae ea. Et, ad.
+    <section class="howSection">
+        <div class="visuals">
+            <h1>¿Como funciona?</h1>
+            <div class="mapIcon">
+                <iconify-icon icon="tdesign:map-information-2" width="10rem" height="10rem"  style="color: white"></iconify-icon>
+                <p>
+                    cualquier persona pueda comprar y vender productos en su ciudad, comparar precios, marcas y modelos en un solo sitio.
+                </p>
+            </div>
+            <div class="comunityIcon">
+                <iconify-icon icon="game-icons:team-idea" width="10rem" height="10rem"  style="color: white"></iconify-icon>
+                <p>
+                    C de Comercios busca virtualizar el comercio pequeño, informal es que generan los, Artesanos, Diseñadores, Artistas, Pequeños empresarios, “Pymes”, Estudiantes, Freelancers, Marcas independientes.
+                </p>
+            </div>
+        </div>
     </section>
 </AnimatedElement>
+
 <AnimatedElement>
-    <section>
-        <Link href="/search" variant="ghost">
-            <div class="link-content">
-                <iconify-icon icon="material-symbols:search"></iconify-icon>
-                <span> Search </span>
-            </div>
-        </Link>
+    <section class="buySection">
+        <div class="visuals">
+            <h1>
+                No esperes mas!
+                <p>Empieza a comprar comodamente</p>
+                todo lo que necesitas en C de Comercio!
+            </h1>
+        </div>
+        <div class="title">
+            <h1>Beneficios</h1>
+            <ul>
+                <li>
+                    Como son productos locales, los puedes obtener el mismo dia.
+                </li>
+                <li>
+                    C de comercios tendrá un lugar físico en distintos puntos de tu ciudad y contará con el servicio de logística.
+                </li>
+                <li>
+                    Deseas algun producto o servicio? Decide si recibir el producto en tu hogar o hacer pickup.
+                </li>
+                <li>
+                    Ofreces algun producto o servicio? Decide si llevar el producto por su cuenta o si desea usar el servicio de logística.
+                </li>
+            </ul>
+            
+            <button>Buscar productos y servicios</button>
+        </div>
     </section>
 </AnimatedElement>
 </div>
@@ -181,4 +216,95 @@ section {
     filter: drop-shadow(10px 10px 5px black);
 }
 
+
+.howSection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.howSection h1 {
+    grid-area: 1 / 1 / 4 / -1;
+    align-self: flex-end;
+    font-size: 300%;
+}
+.comunityIcon {
+    grid-area: 7 / 1 / -1 / 7;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.comunityIcon p {
+    line-height: 1.6rem;
+    font-size: large;
+    align-self: flex-start;
+    background-color: var(--primary-color);
+    border-radius: 2rem;
+    padding: 2rem;
+    filter: drop-shadow(10px 10px 5px black);
+    height: 15rem;
+}
+.mapIcon {
+    grid-area: 7 / 9 / -1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.mapIcon p {
+    line-height: 1.6rem;
+    font-size: large;
+    align-self: flex-start;
+    background-color: var(--primary-color);
+    border-radius: 2rem;
+    padding: 2rem;
+    filter: drop-shadow(10px 10px 5px black);
+    height: 15rem;
+}
+
+.buySection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.buySection h1 {
+    grid-area: 4 / 1 / 5 / -1;
+    font-size: 350%;
+    line-height: 4rem;
+    font-weight: 500;
+}
+.buySection h1 p{
+    font-weight: 100;
+    line-height: 4rem;
+}
+.buySection ul{
+    grid-area: 5 / 1 / 6 / -1;
+    padding: 2rem;
+    background-color: var(--primary-color);
+    border-radius: 2rem;
+    padding: 3rem;
+    filter: drop-shadow(10px 10px 5px black);
+    height: auto;
+}
+.buySection ul li {
+    padding-bottom: 1rem;
+    line-height: 1rem;
+    list-style:georgian;
+    font-weight: 200;
+    font-size: large;
+}
+
+.buySection button {
+    grid-area: 6 / 1 / 7 / -1;
+    margin-top: 1rem;
+    background-color: var(--complementary-color);
+    border-radius: 2rem;
+    filter: drop-shadow(10px 10px 5px black);
+    color: var(--text-color-wb);
+    transition: all 0.3s;
+    font-weight: normal;
+    word-spacing: 0.2rem;
+    letter-spacing: 0.2rem;
+    height: 3rem;
+}
+.buySection button:hover {
+    font-size: larger;
+}
 </style>

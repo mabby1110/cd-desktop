@@ -46,8 +46,4 @@ div {
 div.visible {
     color: var(--text-color-bb);
 }
-div.visible:last-child {
-    opacity: 0;
-    background-color: none;
-}
 </style>
