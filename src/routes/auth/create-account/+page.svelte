@@ -27,39 +27,39 @@
       }}
     >
       <div class="heading">
-        <h1>Create an Account</h1>
+        <h1>Crear Cuenta</h1>
   
-        <p>Create an account and share your bussiness!</p>
+        <p>Crea una cuenta y comparte tu negocio!</p>
       </div>
   
       <div class="input-fields">
         <div class="input-container">
-          <h2>Name</h2>
+          <h2>Nombre</h2>
           <input
             type="text"
             name="name"
             bind:value={name}
-            placeholder="Enter your name"
+            placeholder="Ingresa tu nombre"
           />
         </div>
   
         <div class="input-container">
-          <h2>Email</h2>
+          <h2>Correo</h2>
           <input
             type="email"
             name="email"
             bind:value={email}
-            placeholder="Enter your e-mail"
+            placeholder="Ingresa tu email"
           />
         </div>
   
         <div class="input-container">
-          <h2>Password</h2>
+          <h2>Contraseña</h2>
           <input
             type="password"
             name="password"
             bind:value={password}
-            placeholder="Enter your password"
+            placeholder="Ingresa tu contraseña"
           />
         </div>
   
@@ -73,18 +73,17 @@
         size="large"
         disabled={name.length === 0 || email.length === 0 || password.length < 8}
       >
-        Finish Creating Your Account!
+        Confirmar Datos & Crear Cuenta!
       </Button>
     </form>
   
     <div class="link">
-      <p>Already have an account?</p>
+      <p>Ya tienes cuenta?</p>
   
       <Link href="/auth/login">Log in</Link>
   
       <p class="terms">
-        By creating an account you accept mabby's privacy policy and terms of
-        service.
+        Al crear una cuenta aceptas los terminos y condiciones de C de Comercio asi como su aviso de privacidad.
       </p>
     </div>
   </section>

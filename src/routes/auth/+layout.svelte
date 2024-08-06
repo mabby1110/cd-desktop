@@ -1,8 +1,13 @@
+<script>
+  import logo from "$lib/images/C DE COMERCIO LOGO.svg"
+</script>
+
 <main>
-    <section>
-        <h1>Demo co</h1>
+    <section class="authLayout">
+      <h1>Unete al movimiento de liberacion mercantil</h1>
+        <img src={logo} alt="" style="width: 20rem;">
         <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur, delectus facere provident maiores ipsum tempore, doloribus, molestias culpa quasi deleniti possimus cupiditate sed expedita dignissimos! Alias aspernatur explicabo suscipit temporibus?
+          Nuestra misión es digitalizar, centralizar y exponer todos los negocios locales, permitiendo que cualquier persona disponga de un sitio web y un espacio para desarrollar su trabajo, ya sea vender un producto u ofrecer algún servicio.
         </p>
     </section>
 
@@ -22,7 +27,13 @@
       display: flex;
       height: 100vh;
     }
-  
+    .authLayout {
+    }
+    .authLayout h1 p img {
+      color: white;
+      align-self: center;
+      justify-self: center;
+    }
     section {
       display: none;
       justify-content: center;
@@ -31,7 +42,7 @@
       flex-direction: column;
       background-image: radial-gradient(
         circle at 200% 150%,
-        var(--complementary-color),
+        black,
         var(--accent-color)
       );
       overflow: hidden;
@@ -39,12 +50,11 @@
   
     h1 {
       color: var(--primary-color);
-      font-size: 48px;
+      font-size: 68px;
+      padding: 0 0.5rem;
     }
   
     p {
-      color: var(--primary-color);
-      text-align: center;
       font-size: 16px;
       line-height: 20px;
       font-weight: 500;
