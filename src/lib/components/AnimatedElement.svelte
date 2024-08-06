@@ -13,14 +13,19 @@
             let prev = entry.target.previousElementSibling
             let next = entry.target.nextElementSibling
             isVisible = entry.isIntersecting;
+            const parent = entry.target.parentElement;
 
-            console.log(isVisible, next, $release)
+            // Determine child position efficiently
+            const childIndex = Array.from(parent.children).indexOf(entry.target);
+            console.log(childIndex)
 
-            if (isVisible && prev == null) {
+            if (isVisible && childIndex==0) {
+                release.set(0)
+            } else if (isVisible && childIndex==1){
                 release.set(1)
-            } else if (isVisible && prev != null && next != null){
+            } else if (isVisible && childIndex==2) {
                 release.set(2)
-            } else if (isVisible && next == null) {
+            } else if (isVisible && childIndex==3) {
                 release.set(3)
             }
         },

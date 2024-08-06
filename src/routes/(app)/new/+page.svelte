@@ -17,7 +17,8 @@
   }
 
   let title = "";
-  let language = "";
+  let stripe_id = "";
+  let price = "";
   let content = "";
   let tags: string[] = [];
   let tagInput = "";
@@ -50,8 +51,28 @@
       <input
         type="text"
         name="title"
-        placeholder="Enter a valid title"
+        placeholder="Ingresa un titulo valido"
         bind:value={title}
+      />
+    </div>
+    <div class="input-container">
+      <h2>ID producto en STRIPE</h2>
+
+      <input
+        type="text"
+        name="stripe_id"
+        placeholder="Ingresa el price_id que aparece en stripe"
+        bind:value={stripe_id}
+      />
+    </div>
+    <div class="input-container">
+      <h2>Precio</h2>
+
+      <input
+        type="money"
+        name="price"
+        placeholder="Ingresa un cantidad"
+        bind:value={price}
       />
     </div>
     
@@ -59,18 +80,18 @@
       <h2>Media</h2>
       <InputFiles {selectedFiles} />
       {#if $selectedFiles}
-        <p>Selected files: {$selectedFiles.length}</p>
+        <p>Archivos seleccionados: {$selectedFiles.length}</p>
       {:else}
-        <p>No files selected</p>
+        <p>No hay archivos seleccionados</p>
       {/if}
     </div>
 
     <div class="input-container">
-      <h2>Content</h2>
+      <h2>Descripción</h2>
 
       <textarea
         name="content"
-        placeholder="Enter your code snippet"
+        placeholder="Escribe una descripcion"
         bind:value={content}
       />
     </div>
@@ -127,7 +148,7 @@
         content === "" ||
         tags.length === 0}
     >
-      Post Code Snippet
+      Publicar
     </Button>
   </form>
 </article>

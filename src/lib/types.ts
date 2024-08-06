@@ -16,6 +16,7 @@ export type User = {
   
   export type Post = {
     title: string;
+    stripe_id: String;
     created: string;
     content: string;
     tags: string[];

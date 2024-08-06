@@ -13,9 +13,10 @@
     
     let camera, scene, renderer, windowHalfX, windowHalfY, light;
     
-    let targetPosition1 = new THREE.Vector3(.5, .5, 0);
-    let targetPosition2 = new THREE.Vector3(0, 0, 0);
-    let targetPosition3 = new THREE.Vector3(0, 5, 2);
+    let targetPosition0 = new THREE.Vector3(.5, .5, 0);
+    let targetPosition1 = new THREE.Vector3(0, 0, 0);
+    let targetPosition2 = new THREE.Vector3(0, 0, 5);
+    let targetPosition3 = new THREE.Vector3(0, 2, 5);
     
     const spheres = [];
     onMount(() => {
@@ -40,7 +41,7 @@
             camera.position.z = 0;
 
             // light
-            light = new THREE.PointLight(0x500fbf, 6, 100);
+            light = new THREE.PointLight(0x500fbf, 10, 100);
             light.position.set(1, 1, -3);
             scene.add(light);
 
@@ -158,9 +159,9 @@
         function render() {
             const timer = 0.0001 * Date.now();
             if (release == 1){
-                camera.position.lerp(targetPosition1, 0.01);
+                camera.position.lerp(targetPosition1, 0.05);
             } else if (release == 2) {
-                camera.position.lerp(targetPosition2, 0.01);
+                camera.position.lerp(targetPosition2, 0.02);
             } else if (release == 3) {
                 camera.position.lerp(targetPosition3, 0.01);
                 for (let i = 0; i < spheres.length; i++) {

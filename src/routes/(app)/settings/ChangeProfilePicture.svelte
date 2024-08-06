@@ -76,6 +76,7 @@
   <style>
     div {
       position: absolute;
+      z-index: 99;
       top: 0;
       left: 0;
       display: grid;

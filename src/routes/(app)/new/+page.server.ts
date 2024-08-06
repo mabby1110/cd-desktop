@@ -25,6 +25,8 @@ export const actions = {
     const formData = await request.formData();
 
     const title = formData.get("title");
+    const price = formData.get("price");
+    const price_id = formData.get("stripe_id");
     const content = formData.get("content");
     const tags = formData.get("tags");
     const mediaFiles = formData.getAll('media');
@@ -82,7 +84,9 @@ export const actions = {
         content,
         tags: validatedTags,
         user: authModel.id,
+        price,
         media: mediaFiles,
+        price_id,
       });
       postId = record.id;
       
